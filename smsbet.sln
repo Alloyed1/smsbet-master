@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smsbet.Web", "smsbet\Smsbet.Web.csproj", "{FAE0F963-29BD-42A2-96A9-7ADA1451A10C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{BE1FDA77-1488-4164-A9FD-60E66B4AE490}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FAE0F963-29BD-42A2-96A9-7ADA1451A10C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAE0F963-29BD-42A2-96A9-7ADA1451A10C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAE0F963-29BD-42A2-96A9-7ADA1451A10C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAE0F963-29BD-42A2-96A9-7ADA1451A10C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE1FDA77-1488-4164-A9FD-60E66B4AE490}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE1FDA77-1488-4164-A9FD-60E66B4AE490}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE1FDA77-1488-4164-A9FD-60E66B4AE490}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE1FDA77-1488-4164-A9FD-60E66B4AE490}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5CED7640-55D5-4A50-9C01-0F12966268E3}
+	EndGlobalSection
+EndGlobal

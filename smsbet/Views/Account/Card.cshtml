@@ -1,0 +1,427 @@
+﻿@model  Smsbet.Web.ViewModels.CardViewModel
+@{
+	ViewData["Title"] = "Корзина";
+}
+	<link rel="stylesheet" href="~/libs/swiper/swiper.css">
+<section class="card">
+	<div class="container">
+		<div class="promo_form_block">
+			<div class="form_bl">
+				<ul class="list_form">
+					<li>
+						<input type="text" id="promo" placeholder="Введите промокод">
+					</li>
+					<li>
+						<div class="knob">
+							<button class="button" id="promo_check" type="submit">Применить</button>
+						</div>
+					</li>
+				</ul>
+			</div>
+            <h4 style="color:red" id="error_h"></h4>
+		</div>
+		<div class="event_order_block">
+			<form class="form_event_order">
+                <ul class="event_order_list">
+                    @foreach (var itm in Model.UserCardForecasts)
+                    {
+                        <li class="active">
+                            <table class="event_order_table">
+                                <tbody>
+
+                                    <tr>
+                                        <td>
+                                            <div class="event_order_date">
+                                                <span>
+                                                    
+                                                    @if (@itm.StartTime.Day < 10)
+                                                    {
+                                                        <span>0</span><span>@itm.StartTime.Day</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>@itm.StartTime.Day</span>
+                                                    }
+                                                    /
+                                                    @if (@itm.StartTime.DayOfWeek.ToString() == "Tuesday")
+                                                    {
+                                                        <span>ВТ.</span>
+                                                    }
+                                                    else if (@itm.StartTime.DayOfWeek.ToString() == "Monday")
+                                                    {
+                                                        <span>ПН.</span>
+                                                    }
+                                                    else if (@itm.StartTime.DayOfWeek.ToString() == "Wednesday")
+                                                    {
+                                                        <span>СР.</span>
+                                                    }
+                                                    else if (@itm.StartTime.DayOfWeek.ToString() == "Thursday")
+                                                    {
+                                                        <span>ЧТ.</span>
+                                                    }
+                                                    else if (@itm.StartTime.DayOfWeek.ToString() == "Friday")
+                                                    {
+                                                        <span>ПТ.</span>
+                                                    }
+
+                                                    else if (@itm.StartTime.DayOfWeek.ToString() == "Saturday")
+                                                    {
+                                                        <span>СБ.</span>
+                                                    }
+                                                    else if (@itm.StartTime.DayOfWeek.ToString() == "Sunday")
+                                                    {
+                                                        <span>ВС.</span>
+                                                    }
+
+
+
+                                                    / 
+                                                    @if (@itm.StartTime.Hour == 0)
+                                                    {
+                                                        <span>00</span>
+                                                    }
+                                                    else if(@itm.StartTime.Hour < 10)
+                                                    {
+                                                        <span>0</span><span>@itm.StartTime.Hour</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        @itm.StartTime.Hour
+                                                    }
+                                                    :
+                                                    @if (itm.StartTime.Minute == 0)
+                                                                                                            {
+                                                                                                                <span>00</span>
+                                                                                                            }
+                                                                                                            else if(itm.StartTime.Minute < 10)
+                                                                                                            {
+                                                                                                                <span>0</span><span>@itm.StartTime.Minute</span>
+                                                                                                            }
+                                                                                                            else
+                                                                                                            {
+                                                                                                                @itm.StartTime.Minute
+                                                                                                            }
+                                                </span>
+                                            </div>
+                                        </td>
+
+                                        <td class="event_order_info">
+                                            <div class="icon">
+                                                
+                                                <div class="icon_disciplines" style="background-image: url(@Html.Raw($"'https://Smsbet.Web.ru/img/all/{itm.ChampionatName}.png'"));color:black!important;max-width:45px;max-height:45px;"></div>
+
+                                            </div>
+                                            <div class="stat_event" style="margin-left:9px;margin-top:7px;">
+                                                @itm.ChampionatName
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="coefficient">Кф. @itm.IntervalKoof</div>
+                                        </td>
+
+                                        <td>
+                                            <div class="event_order_price">99 ₽</div>
+                                        </td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                            <div class="knob">
+                                <a data-forecastId="@itm.Id" class="delete_event_order_knob" href="#"></a>
+                            </div>
+                        </li>
+                    }
+                    
+                </ul>
+                <div class="add_event_block">
+                    <h3>Добавить событие</h3>
+                    <div class="slider_add_event_block">
+                        <div class="slider_add_event swiper-container">
+                            <div class="swiper-wrapper">
+                                @foreach (var itm in Model.RandomForecasts)
+                                {
+                                    <div class="swiper-slide">
+                                        <div hidden class="prognoz">@itm.ChampionatName</div>
+                                        <div class="item_slide">
+                                            <div class="date_event_block">
+                                                <div class="icon">
+           
+                                                    <div class="icon_disciplines" style="background-image: url(@Html.Raw($"'https://Smsbet.Web.ru/img/all/{itm.ChampionatName}.png'")) ;color:black!important;max-width:30px;max-height:32px;"></div>
+                                                </div>
+                                                <div class="date_event">
+                                                    <span>
+                                                        @if (@itm.StartTime.Day < 10)
+                                                        {
+                                                            <span>0</span><span>@itm.StartTime.Day</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@itm.StartTime.Day</span>
+                                                        }
+                                                         /
+                                                        @if (@itm.StartTime.DayOfWeek.ToString() == "Tuesday")
+                                                        {
+                                                            <span>ВТ.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Monday")
+                                                        {
+                                                            <span>ПН.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Wednesday")
+                                                        {
+                                                            <span>СР.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Thursday")
+                                                        {
+                                                            <span>ЧТ.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Friday")
+                                                        {
+                                                            <span>ПТ.</span>
+                                                        }
+
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Saturday")
+                                                        {
+                                                            <span>СБ.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Sunday")
+                                                        {
+                                                            <span>ВС.</span>
+                                                        }
+
+
+
+                                                        / 
+                                                                                                            @if (@itm.StartTime.Hour == 0)
+                                                                                                            {
+                                                                                                                <span>00</span>
+                                                                                                            }
+                                                                                                            else if(@itm.StartTime.Hour < 10)
+                                                                                                            {
+                                                                                                                <span>0</span><span>@itm.StartTime.Hour</span>
+                                                                                                            }
+                                                                                                            else
+                                                                                                            {
+                                                                                                                @itm.StartTime.Hour
+                                                                                                            }
+                                                                                                            :
+                                                        @if (itm.StartTime.Minute == 0)
+                                                        {
+                                                            <span>00</span>
+                                                        }
+                                                        else if(itm.StartTime.Minute < 10)
+                                                        {
+                                                            <span>0</span><span>@itm.StartTime.Minute</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            @itm.StartTime.Minute
+                                                        }
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="coeff_enent">
+                                                Кф. @itm.IntervalKoof
+                                            </div>
+                                            <div class="add_event_last_block">
+                                                <div class="price_add_event">99 ₽</div>
+                                                <div class="knob">
+                                                    <a class="add_event_knob" data-forecastId="@itm.Id" href="#">Добавить</a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                }
+
+
+
+
+
+
+                                <div class="slider_add_event_knob_prev"></div>
+                                <div class="slider_add_event_knob_next"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				<div class="price_order_block">
+					<div class="price_order">
+						<p>
+							Сумма заказа:
+							<span id="order_sum">0 ₽</span>
+						</p>
+						@if (User.Identity.IsAuthenticated)
+						{
+							<div class="knob">
+								<button class="button" type="submit" asp-action="Pay" asp-controller="Home">Заказать</button>
+							</div>
+						}
+						else
+						{
+					<div class="knob">
+						<button class="button fancybox" type="submit" href="#authorization">Заказать</button>
+					</div>
+						}
+
+						
+
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+    
+</section>
+@section Scripts
+{ 
+	<script type="text/javascript">
+
+     document.onload = CalcSum();
+
+
+     function CalcSum() {
+         let count = $('.delete_event_order_knob').length;
+         $('#order_sum').text(count * 99 + ' ₽');
+     }
+
+     $('body').on('click ', '.delete_event_order_knob' ,function (event) {
+         event.preventDefault();
+         let id = $(this).attr('data-forecastId');
+         $(this).parent().parent().remove();
+
+         let parentDiv = $(this).parent().parent();
+
+
+         let forecastId = $(this).attr('data-forecastId');
+         let scrImg = parentDiv.find('div.icon_disciplines').css('background-image').replace('url(', '').replace(')', '').replace(/\"/gi, "");
+         let koef = parentDiv.find('div.coefficient').text();
+         let time = parentDiv.find('div.event_order_date').text();
+		 let prognoz = parentDiv.find('div.stat_event').text();
+		 
+		 let newStringLink = "'";
+		 newStringLink += scrImg;
+		 newStringLink += "'";
+		 
+		 scrImg = newStringLink;
+
+		 console.log(scrImg);
+
+		 $('.swiper-wrapper').append('<div class="swiper-slide"><div hidden class="prognoz">' + prognoz + '</div><div class="item_slide"><div class="date_event_block"> <div class="icon_disciplines" style="background-image: url('  + scrImg   + ');color:black!important;max-width:30px;max-height:32px;"></div><div class="date_event">' + time + '</div></div><div class="coeff_enent">' + koef + '</div><div class="add_event_last_block"><div class="price_add_event">99 ₽</div><div class="knob"><a class="add_event_knob" data-forecastId="' + id + '" href="#">Добавить</a></div></div></div></div>');
+
+		 let userName = '@User.Identity.Name';
+		 if (userName.length == 0) {
+			 if ($.cookie("itemsCard") == undefined) {
+				 $.cookie("itemsCard", forecastId.toString(), { expires: 7, path: "/" });
+			 }
+			 else {
+				 let massItems = $.cookie("itemsCard").split(',');
+
+				 if (massItems.indexOf(forecastId.toString()) != -1) {
+					 massItems.splice(massItems.indexOf(forecastId.toString()), 1);
+					 $.cookie("itemsCard", massItems.join(','), { expires: 7, path: "/" });
+				 }
+			 }
+		 }
+		 else {
+			 $.ajax({
+             type: 'POST',
+             url: '/Account/DeleteFromForecast',
+             async: true,
+             data: {
+                 userName: '@User.Identity.Name',
+                 id: id
+             },
+             success: function () {
+
+             }
+         });
+		 }
+
+         
+         CalcSum();
+
+     })
+
+     $('body').on('click', '.add_event_knob', function (event) {
+         event.preventDefault();
+
+         let parentDiv = $(this).parent().parent().parent().parent();
+
+         let forecastId = $(this).attr('data-forecastId');
+         let scrImg = parentDiv.find('div.icon_disciplines').css('background-image').replace('url(', '').replace(')', '').replace(/\"/gi, "");
+         let koef = parentDiv.find('div.coeff_enent').text();
+         let time = parentDiv.find('div.date_event').text();
+		 let prognoz = parentDiv.find('div.prognoz').text();
+
+		 $('.event_order_list').append('<li class="active"><table class="event_order_table"><tbody><tr><td><div class="event_order_date">' + time + '</div></td><td class="event_order_info"><div class="icon_disciplines" style="background-image: url(' + '' + scrImg + '' + ');color:black!important;max-width:45px;max-height:45px;"></div><div class="stat_event">' + prognoz + '</div></td><td><div class="coefficient">' + koef + '</div></td><td><div class="event_order_price">99 ₽</div></td></tr></tbody></table><div class="knob"><a data-forecastId="' + forecastId + '" class="delete_event_order_knob" href="#"></a></div></li>');
+         $(this).parent().parent().parent().parent().remove();
+         CalcSum();
+
+		 let userName = '@User.Identity.Name';
+		 if (userName.length == 0) {
+			 if ($.cookie("itemsCard") == undefined) {
+				 $.cookie("itemsCard", forecastId.toString(), { expires: 7, path: "/" });
+			 }
+			 else {
+				 let massItems = $.cookie("itemsCard").split(',');
+
+				 if (massItems.indexOf(forecastId.toString()) == -1) {
+					 massItems.push(forecastId.toString());
+					 $.cookie("itemsCard", massItems.join(','), { expires: 7, path: "/" });
+				 }
+			 }
+		 }
+		 else {
+			 $.ajax({
+             type: 'POST',
+             url: '/Account/AddToBasket',
+             async: true,
+             data: {
+                 userName: userName,
+                 forecastId: forecastId
+             }
+			});
+		 }
+
+     });
+
+     $('#promo_check').on('click', function () {
+         if ($('#promo').val().length == 0) {
+             $('#error_h').text('Введите пин-код');
+         }
+         else {
+             $.ajax({
+                 type: 'GET',
+                 url: '/Account/CheckFreePromocode',
+                 async: true,
+                 data: {
+                     promocode: $('#promo').val(),
+                     userName: '@User.Identity.Name'
+                 },
+                 success: function (status) {
+                     if (status == 0) {
+                         $('#error_h').text('Неверный пин-код');
+                     }
+                     else if (status == 1) {
+                         $('#order_sum').text('0 ₽')
+                     }
+                     else if (status == 2) {
+                         $('#error_h').text('Для получения бесплатного прогноза - в вашей корзине должен быть только один прогноз');
+                     }
+                     else if (status == 3) {
+                         $('#error_h').text('Вы уже использовали бесплатный промокод');
+					 }
+					 else if (status == 400) {
+                         $('#error_h').text('Авторизируйтесь, чтобы активировать промокод');
+                     }
+                 }
+
+             });
+         }
+     });
+	</script>
+}
+

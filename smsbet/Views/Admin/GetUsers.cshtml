@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Smsbet.Web.Models.User>
+@{
+    ViewData["Title"] = "GetUsers";
+}
+<environment include="Development">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+</environment>
+<environment exclude="Development">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+          asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+          crossorigin="anonymous"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
+</environment>
+<div class="container">
+    <h4>Всего пользователей @Model.Count()</h4>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Телефон</th>
+                <th scope="col">Количество покупок</th>
+                <th scope="col">Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forec in Model)
+            {
+                <tr>
+                    <th scope="col">@forec.Email</th>
+                    <th scope="col">0</th>
+                    <th scope="col">
+                        <a class="" style="padding-top:6px;" href="#">Лог действй(позже)</a><br />
+                        <a class="" style="padding-top:6px;" href="#">Отправить смс(позже)</a><br />
+                        <a class="" style="padding-top:6px;" href="#">Заблокировать(позже)</a>
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

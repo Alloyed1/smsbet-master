@@ -1,0 +1,254 @@
+﻿@model Smsbet.Web.ViewModels.InfoViewModel  
+@{
+    ViewData["Title"] = "Информация";
+}
+<section class="load">
+    <div class="container">
+        <div class="load_event_block">
+            <div class="header_load_event">
+                <div class="name_event">
+                    @Model.Forecast.Game, @Model.Forecast.ChampionatName
+                </div>
+                <div class="date_event">
+                    @if (Model.Forecast.StartTime.DayOfWeek.ToString() == "Tuesday")
+                    {
+                        <span>Вторник</span>
+                    }
+                    else if (Model.Forecast.StartTime.DayOfWeek.ToString() == "Monday")
+                    {
+                        <span>Понедельник</span>
+                    }
+                    else if (Model.Forecast.StartTime.DayOfWeek.ToString() == "Wednesday")
+                    {
+                        <span>Среда</span>
+                    }
+                    else if (Model.Forecast.StartTime.DayOfWeek.ToString() == "Thursday")
+                    {
+                        <span>Четверг</span>
+                    }
+                    else if (Model.Forecast.StartTime.DayOfWeek.ToString() == "Friday")
+                    {
+                        <span>Пятница</span>
+                    }
+
+                    else if (Model.Forecast.StartTime.DayOfWeek.ToString() == "Saturday")
+                    {
+                        <span>Суббота</span>
+                    }
+                    else if (Model.Forecast.StartTime.DayOfWeek.ToString() == "Sunday")
+                    {
+                        <span>Воскресенье</span>
+                    },
+                   @if (@Model.Forecast.StartTime.Day < 10)
+                   {
+                       <span>0</span><span>@Model.Forecast.StartTime.Day</span>
+                   }
+                   else
+                   {
+                       @Model.Forecast.StartTime.Day
+                   }
+                    
+                    @if (@Model.Forecast.StartTime.Month == 1)
+                    {
+                        <span>Января</span>
+                    }
+                    else if (@Model.Forecast.StartTime.Month == 2)
+                    {
+                        <span>Февраля</span>
+                    }
+                    else if (@Model.Forecast.StartTime.Month == 3)
+                    {
+                        <span>Марта</span>
+                    }
+                    else if (@Model.Forecast.StartTime.Month == 4)
+                    {
+                        <span>Апреля</span>
+                    }
+                    else if (@Model.Forecast.StartTime.Month == 5)
+                    {
+                        <span>Мая</span>
+                    }
+                    else if (@Model.Forecast.StartTime.Month == 6)
+                    {
+                        <span>Июня</span>
+                    }
+                    else if (@Model.Forecast.StartTime.Month == 7)
+                    {
+                        <span>Июля</span>
+                    }
+                    else if (@Model.Forecast.StartTime.Month == 8)
+                    {
+                        <span>Августа</span>
+                    }
+                    else if (@Model.Forecast.StartTime.Month == 9)
+                    {
+                        <span>Сентября</span>
+                    }
+                    else if (@Model.Forecast.StartTime.Month == 10)
+                    {
+                        <span>Октября</span>
+                    }
+                    else if (@Model.Forecast.StartTime.Month == 11)
+                    {
+                        <span>Ноября</span>
+                    }
+                    else if (@Model.Forecast.StartTime.Month == 12)
+                    {
+                        <span>Декабря</span>
+                    }
+                    @Model.Forecast.StartTime.Year,
+
+
+                    @if (Model.Forecast.StartTime.Hour.ToString().Length == 1)
+                    {
+                        <span>0</span><span>@Model.Forecast.StartTime.Hour</span>
+                    }
+                    else
+                    {
+                        @Model.Forecast.StartTime.Hour 
+                    }
+                    :
+
+                    @if (Model.Forecast.StartTime.Minute == 0)
+                    {
+                        <span>00</span>
+                    }
+                    else if(Model.Forecast.StartTime.Minute < 10)
+                    {
+                        <span>0</span><span>@Model.Forecast.StartTime.Minute</span>
+                    }
+                    else
+                    {
+                        @Model.Forecast.StartTime.Minute
+                    }
+                </div>
+                <div class="time_event">
+                    <span>Осталось @((Math.Round((Model.Forecast.StartTime - DateTime.Now.AddHours(1)).TotalHours))) часа до начала</span>
+                    <div class="time_event_info">
+                        рассылка отправляется за 15 минут до начала события
+                    </div>
+                </div>
+            </div>
+            <div class="glav_info_load_block">
+                <h3>
+                    Пожалуйста, подождите, пока мы проверим наличие события в линиях<br>
+                    букмекерских контор
+                </h3>
+                <div class="glav_info_load_bl">
+                    <div class="item_glav_info_load first-preim animated bounceIn" hidden>
+                        <div class="icon">
+                            <img src="~/img/icon_glav_info_event.jpg" alt="картинка">
+                        </div>
+                        <div class="item_glav_info_load_text">
+                            <p>
+                                @Model.CountViews других пользователей просматривают
+                                это событие
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="item_glav_info_load second-preim" hidden>
+                        <div class="icon">
+                            <img src="~/img/icon_glav_info_event.jpg" alt="картинка">
+                        </div>
+                        <div class="item_glav_info_load_text">
+                            <p>
+                                Cобытия данной категории проходят в @Model.Forecast.KoofProxoda%
+                                случаев в этом месяце
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="item_glav_info_load third-preim" hidden>
+                        <div class="icon">
+                            <img src="~/img/icon_glav_info_event.jpg" alt="картинка">
+                        </div>
+                        <div class="item_glav_info_load_text">
+                            <p>
+                                В случае неудачного результата возврат
+                                составит: @(Model.Forecast.PercentReturn / 100 * 190) рублей
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div id="myProgress">
+                    <div id="myBar">1%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script type="text/javascript">
+		let userName = "@User.Identity.Name"
+		if (userName.length == 0) {
+			if ($.cookie("itemsCard") == undefined) {
+				$.cookie("itemsCard", "@Model.Forecast.Id", { expires: 7, path: "/" });
+			}
+			else {
+				let massItems = $.cookie("itemsCard").split(',');
+
+				if (massItems.indexOf('@Model.Forecast.Id.ToString()') == -1) {
+					massItems.push(@Model.Forecast.Id);
+					$.cookie("itemsCard", massItems.join(','), { expires: 7, path: "/" });
+				}
+			}
+			
+
+
+		}
+		else {
+			function addBasket(id) {
+				$.ajax({
+					type: 'POST',
+					url: '/Account/AddToBasket',
+					async: true,
+					data: {
+						userName: userName,
+						forecastId: id
+					},
+					success: function () {
+						window.location.href = "/Account/Card";
+					}
+				})
+            }
+		}
+
+
+        function move() {
+            var elem = document.getElementById("myBar");
+            var width = 1;
+            var id = setInterval(frame, 88);
+            function frame() {
+                if (width == 3) {
+					$('.first-preim').removeAttr('hidden');
+                }
+                else if (width == 37) {
+					$('.second-preim').removeAttr('hidden');
+                }
+                else if (width == 67) {
+					$('.third-preim').removeAttr('hidden');
+                }
+                if (width >= 100) {
+					clearInterval(id);
+					if (userName.length == 0) {
+						window.location.href = "/Account/Card";
+					}
+					else {
+						addBasket(@Model.Forecast.Id);
+					}
+                    
+                    
+                } else {
+                    width++;
+                    elem.style.width = width + '%';
+                    elem.innerHTML = width * 1 + '%';
+                }
+            }
+        }
+
+        window.onload = move;
+    </script>
+}
+

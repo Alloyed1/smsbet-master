@@ -1,0 +1,387 @@
+﻿@model Smsbet.Web.ViewModels.SettingsViewModel;
+@{
+    ViewData["Title"] = "Личный кабинет - Smsbet";
+}
+<section class="sec-setting">
+	<div class="container">
+		<div class="setting-block">
+			<div class="setting-title-block">
+				<h2>Настройки</h2>
+			</div>
+			<div class="setting-bl">
+				<ul class="list-setting">
+					<li>
+						<div class="item-list-setting">
+							<b>Мобильный телефон</b>
+							<span>@Html.Raw("+" + Model.Phone)</span>
+						</div>
+						<div class="item-list-setting-knob-bl">
+							<div class="knob-editing">
+								<a class="btn-editing fancybox" id="btn-edit-phone" href="#change-phone">Изменить</a>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="item-list-setting item-list-setting-mail">
+							<b>Элетронная почта</b>
+							@if (Model.Email != Model.Phone || Model.Email == String.Empty)
+							{
+								<span>@Html.Raw(Model.Email)</span>
+							}
+							else
+							{
+								<span>Не установлено</span>
+							}
+										
+						</div>
+						<div class="item-list-setting-knob-bl">
+							<div class="knob-editing">
+								<a class="btn-editing fancybox" id="btn-edit-mail" href="#change-mail">Изменить</a>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="item-list-setting item-list-setting-pass">
+							<b>Пароль</b>
+						</div>
+						<div class="item-list-setting-knob-bl">
+
+							<div class="knob-editing">
+								
+								<a class="btn-editing fancybox" id="btn-edit-password" href="#change-password">Изменить</a>
+
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="item-list-setting item-list-setting-push">
+							<b>Рассылка о скидках и специальных предожениях</b>
+							<span>Всё о возможностях наших услуг и главные скидки месяца в SMS</span>
+						</div>
+						<div class="item-list-setting-knob-bl">
+							<div class="check-push">
+								@if (Model.IsSmsPushing)
+								{
+									<input id="checkbox-push3" type="checkbox" checked>
+								}
+								else
+								{
+									<input id="checkbox-push3" type="checkbox">
+								}
+											
+								<label for="checkbox-push3"></label>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="item-list-setting item-list-setting-push">
+							<b>Дайджест новостей о ставках</b>
+							<span>Советы, лайфхаки индустрии – раз в неделю на Email</span>
+						</div>
+						<div class="item-list-setting-knob-bl">
+							<div class="check-push">
+								@if (Model.IsEmailPushing)
+								{
+									<input id="checkbox-push4" type="checkbox" checked>
+								}
+								else
+								{
+									<input id="checkbox-push4" type="checkbox">
+								}
+								<label for="checkbox-push4"></label>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div id="change-password" class="pop_up" hidden="">
+		<b>Изменение пароля</b>
+    
+		<p hidden style="padding-bottom: 10px; color: red;" id="error-password"></p>
+
+		<form class="all_form">
+			<div class="all_form_block" id="first-change-pass">
+				<ul class="list_form">
+					<li>
+						<input class="phone mobile" type="password" id="new-password" placeholder="Введите пароль">
+					</li>
+					<li>
+						<button class="button" type="button" id="get-code-btn">Получить код</button>
+					</li>
+				</ul>
+			</div>
+			<div class="all_form_block" id="second-change-pass" hidden>
+				<ul class="list_form">
+					<li>
+						<input class="phone mobile" type="text" id="code-input"  placeholder="Код из смс">
+					</li>
+					<li>
+						<button class="button" type="button" id="confirm_code">Подвердить код</button>
+					</li>
+				</ul>
+			</div>
+                    
+		</form>
+	</div>
+	<div id="change-mail" class="pop_up" hidden="">
+		<b>Изменение почты</b>
+        
+		<p hidden style="padding-bottom: 10px; color: red;" id="error-mail"></p>
+    
+		<form class="all_form">
+			<div class="all_form_block" id="first-change-mail">
+				<ul class="list_form">
+					<li>
+						<input class="phone mobile" type="text" id="new-mail" placeholder="Введите почту">
+					</li>
+					<li>
+						<button class="button" type="button" id="get-code-btn-mail">Получить код</button>
+					</li>
+				</ul>
+			</div>
+			<div class="all_form_block" id="second-change-mail" hidden>
+				<ul class="list_form">
+					<li>
+						<input class="phone mobile" type="text" id="code-input-mail"  placeholder="Код из смс">
+					</li>
+					<li>
+						<button class="button" type="button" id="confirm_code-mail">Подвердить код</button>
+					</li>
+				</ul>
+			</div>
+                        
+		</form>
+	</div>
+	<div id="change-phone" class="pop_up" hidden="">
+		<b>Изменение телефона</b>
+            
+		<p hidden style="padding-bottom: 10px; color: red;" id="error-phone"></p>
+        
+		<form class="all_form">
+			<div class="all_form_block" id="first-change-phone">
+				<ul class="list_form">
+					<li>
+						<input class="phone mobile" type="tel" id="new-phone" placeholder="Введите телефон">
+					</li>
+					<li>
+						<button class="button" type="button" id="get-code-btn-phone">Получить код</button>
+					</li>
+				</ul>
+			</div>
+			<div class="all_form_block" id="second-change-phone" hidden>
+				<ul class="list_form">
+					<li>
+						<input class="phone mobile" type="text" id="code-input-phone"  placeholder="Код из смс">
+					</li>
+					<li>
+						<button class="button" type="button" id="confirm_code-phone">Подвердить код</button>
+					</li>
+				</ul>
+			</div>
+                            
+		</form>
+	</div>
+	
+</section>
+@section Scripts
+{
+	<script type="text/javascript">
+			$('#checkbox-push3').on('change', function() {
+				$('#checkbox-push1')[0].checked = $('#checkbox-push3')[0].checked;
+				
+                $.ajax({
+                    type: 'GET',
+                    url:'/Home/UpdatePushing',
+                    async:true,
+                    data:{
+                        isType: 'sms',
+                        value: $('#checkbox-push3')[0].checked
+                    },
+                    success: function() {
+                      
+                    }
+                    
+                });
+				
+			});
+			//Изменение пароля
+			$('#confirm_code').on('click', function() {
+				
+			  let code = $('#code-input').val();
+			  $.ajax({
+			  	type:'GET',
+			  	url:'/Home/CheckCodeNewPassword',
+			  	data:{
+			  		code: code
+			  	},
+			  	async: true,
+			  	success: function(res) {
+			  	  if(res === 'success'){
+			  	  	$('.fancybox-close-small').click();
+			  	  }
+			  	  else{
+			  	  	$('#error-password').val(res);
+			  	  }
+			  	}
+			  });
+			  
+			});
+			
+			$('#get-code-btn').on('click', function() {
+			  	$.ajax({
+			  		type: 'GET',
+			  		url: '/Home/CheckPasswordCorrect',
+			  		async: true,
+			  		data:{
+			  			password: $('#new-password').val()
+			  		},
+			  		success: function(res) {
+			  			console.log(res);
+			  		  	if(res === 'success'){
+			  		  		
+			  		  		$('#first-change-pass')[0].hidden = true;
+			  		  		$('#second-change-pass')[0].hidden = false;
+			  		  		$('#error-password')[0].hidden = true;
+			  		  		
+			  		  	}
+			  		  	else{
+			  		  		
+			  		  		let errorPassword = $('#error-password');
+			  		  		
+			  		  		errorPassword[0].hidden = false;
+			  		  		errorPassword.text(res);
+			  		  		
+			  		  	}
+			  		}
+			  	})
+			  	
+			});
+			//Изменение почты
+			$('#confirm_code-mail').on('click', function() {
+				
+			  let code = $('#code-input-mail').val();
+			  $.ajax({
+			  	type:'GET',
+			  	url:'/Home/CheckCodeNewEmail',
+			  	data:{
+			  		code: code
+			  	},
+			  	async: true,
+			  	success: function(res) {
+			  	  if(res === 'success'){
+			  	  	$('.fancybox-close-small').click();
+			  	  	$('.item-list-setting-mail>span').text($('#new-mail').val());
+			  	  }
+			  	  else{
+			  	  	$('#error-mail').val(res);
+			  	  }
+			  	}
+			  });
+			  
+			});
+			
+			$('#get-code-btn-mail').on('click', function() {
+			  	$.ajax({
+			  		type: 'GET',
+			  		url: '/Home/CheckEmailCorrect',
+			  		async: true,
+			  		data:{
+			  			email: $('#new-mail').val()
+			  		},
+			  		success: function(res) {
+			  			console.log(res);
+			  		  	if(res === 'success'){
+			  		  		
+			  		  		$('#first-change-mail')[0].hidden = true;
+			  		  		$('#second-change-mail')[0].hidden = false;
+			  		  		$('#error-mail')[0].hidden = true;
+			  		  		
+			  		  	}
+			  		  	else{
+			  		  		
+			  		  		let errorPassword = $('#error-mail');
+			  		  		
+			  		  		errorPassword[0].hidden = false;
+			  		  		errorPassword.text(res);
+			  		  		
+			  		  	}
+			  		}
+			  	})
+			  	
+			});
+				
+//Изменение телефона
+			$('#confirm_code-phone').on('click', function() {
+				
+			  let phone = $('#code-input-phone').val();
+			  $.ajax({
+			  	type:'GET',
+			  	url:'/Home/CheckCodeNewPhone',
+			  	data:{
+			  		code: phone
+			  	},
+			  	async: true,
+			  	success: function(res) {
+			  	  if(res === 'success'){
+			  	  	$('.fancybox-close-small').click();
+			  	  	$('.item-list-setting-phone>span').text($('#new-phone').val());
+			  	  }
+			  	  else{
+			  	  	$('#error-phone').val(res);
+			  	  }
+			  	}
+			  });
+			  
+			});
+			
+			$('#get-code-btn-phone').on('click', function() {
+			  	$.ajax({
+			  		type: 'GET',
+			  		url: '/Home/CheckPhoneCorrect',
+			  		async: true,
+			  		data:{
+			  			phone: $('#new-phone').val()
+			  		},
+			  		success: function(res) {
+			  			console.log(res);
+			  		  	if(res === 'success'){
+			  		  		
+			  		  		$('#first-change-phone')[0].hidden = true;
+			  		  		$('#second-change-phone')[0].hidden = false;
+			  		  		$('#error-phone')[0].hidden = true;
+			  		  		
+			  		  	}
+			  		  	else{
+			  		  		
+			  		  		let errorPassword = $('#error-phone');
+			  		  		
+			  		  		errorPassword[0].hidden = false;
+			  		  		errorPassword.text(res);
+			  		  		
+			  		  	}
+			  		}
+			  	})
+			  	
+			});
+             $('#checkbox-push4').on('change', function() {
+                 $('#checkbox-push2')[0].checked = $('#checkbox-push4')[0].checked;
+                 
+					$.ajax({
+						type: 'GET',
+						url:'/Home/UpdatePushing',
+						async:true,
+						data:{
+							isType: 'email',
+							value: $('#checkbox-push4')[0].checked
+						},
+						success: function() {
+						  
+						}
+						
+					});
+                 
+             });
+	</script>
+}

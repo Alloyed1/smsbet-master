@@ -1,0 +1,35 @@
+﻿@model Smsbet.Web.ViewModels.PromocodeViewModel
+@{
+    ViewData["Title"] = "Promocodes";
+}
+
+    <div class="container">
+        <h4>Промокод на бесплатный прогноз</h4>
+        @if (Model.FreePromocode != null)
+        {
+            <input type="text" name="name" class="input free_promocode" value="@Model.FreePromocode" />
+        }
+        else
+        {
+            <input type="text" name="name" class="input free_promocode" value="" />
+        }
+    <button class="btn save_free_promocode_btn">Сохранить</button>
+    </div>
+@section Scripts{ 
+    <script type="text/javascript">
+        $('.save_free_promocode_btn').on('click', function () {
+            console.log($('.save_free_promocode_btn').text());
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/SetFreePromocode',
+                data: {
+                    code: $('.free_promocode').val()
+                },
+                success: function () {
+                    console.log('успешно');
+                }
+            });
+        })
+    </script>
+}
+

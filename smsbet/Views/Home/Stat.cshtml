@@ -1,0 +1,293 @@
+﻿@model IEnumerable<Smsbet.Web.ViewModels.StatViewModel>
+@{
+    ViewData["Title"] = "Стистика игр";
+}
+
+<section class="prog_win">
+    <div class="big_container">
+        <div class="prog_win_block">
+            <div class="prog_win_bl">
+                <h2>Спрогнозируй свой выигрыш</h2>
+                <div class="prog_win_text_block">
+                    <p>Введи среднюю сумму  ставки и узнай свой выигрыш, если бы ты ставил с нами на все события прошлой недели</p>
+                </div>
+                @*<div class="knob_week_block">
+                    <a class="knob_week" href="#">Подписка на неделю</a>
+                </div>*@
+                <div class="form_block form_block_prog_win">
+                    <form class="all_form">
+                        <div class="form_bl">
+                            <ul class="list_form">
+                                <li>
+                                    <input type="number" id="rate"  placeholder="Введите сумму ставки">
+                                </li>
+                                <li>
+                                    <div class="knob">
+                                        <button id="calc_button" class="button" type="button">Расчитать</button>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="form_price_win_block" style="opacity: 0;">
+                                <b>
+                                    Ваш выигрыш:
+                                    <span class="price_win">0 рублей</span>
+                                </b>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="statistics">
+    <div class="container">
+        <div class="stat_bl">
+            <div class="stat">
+                <div class="all_text">
+                    <h2>Статистика</h2>
+                </div>
+                <div class="calendar_block">
+                    <div id="datepicker" class="datepicker calendar_bl"></div>
+                </div>
+            </div>
+            <div class="stat_info">
+                <div class="knob_stat_bl">
+                    <div class="knob">
+                        <a class="btn_profitable"  href="#">Самые выгодные в этот день</a>
+                    </div>
+                    <div class="knob">
+                        <a class="btn_popular" href="#">Популярные</a>
+                    </div>
+                </div>
+                <div class="stat_info_block">
+                    <ul>
+                        @{ int i = 0;}
+                        @foreach (var itm in Model)
+                        {
+                        <li>
+                            @{string winOrNot;}
+                            @if (itm.Forecast.Status == "Success")
+                            {
+                                winOrNot = "one_stat_plus";
+                            }
+                            else
+                            {
+                                winOrNot = "one_stat_minus";
+                            }
+                            @{i++; }
+                            @if (i > 4)
+                            {
+                                <div class="open_block">
+                                    <table class="one_stat @winOrNot">
+                                        <tr>
+                                            <td>
+                                                
+                                                    <div class="icon_disciplines" style="background-image: url(@Html.Raw($"'https://Smsbet.Web.ru/img/all/{itm.Forecast.ChampionatName}.png'"));color:black!important;max-width:39px;max-height:41px;"></div>
+                                            </td>
+                                            <td>
+                                                <div class="one_stat_number">@itm.CountViews</div>
+                                            </td>
+                                            <td class="stat_event_block">
+                                                <div class="stat_event">@itm.Forecast.ForecastText</div>
+                                            </td>
+                                            <td>
+                                                <div class="indicator">@itm.Forecast.PublicPrognoz</div>
+                                            </td>
+                                            <td>
+                                                <div class="coefficient">@itm.Forecast.IntervalKoof</div>
+                                            </td>
+                                            <td>
+                                                <div class="result">@itm.Forecast.Result</div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            }
+                            else
+                            {
+                                <table class="one_stat @winOrNot">
+                                    <tr>
+                                        <td>
+                                            
+                                            <div class="icon_disciplines" style="background-image: url(@Html.Raw($"'https://Smsbet.Web.ru/img/all/{itm.Forecast.ChampionatName}.png'"));color:black!important;max-width:39px;max-height:41px;"></div>
+                                        </td>
+                                        <td>
+                                            <div class="one_stat_number">@itm.CountViews</div>
+                                        </td>
+                                        <td class="stat_event_block">
+                                            <div class="stat_event">@itm.Forecast.ForecastText</div>
+                                        </td>
+                                        <td>
+                                            <div class="indicator">@itm.Forecast.PublicPrognoz</div>
+                                        </td>
+                                        <td>
+                                            <div class="coefficient">@itm.Forecast.IntervalKoof</div>
+                                        </td>
+                                        <td>
+                                            <div class="result">@itm.Forecast.Result</div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            }
+
+                        </li>
+                        }
+                        
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @if (Model.Count() > 4)
+        {
+            <div class="all_developments">
+                <a class="btn_all_develop" href="#">
+                    <span>Еще события</span>
+                </a>
+            </div>
+        }
+
+    </div>
+</section>
+<section class="news_mailing">
+    <div class="container">
+        <div class="all_text">
+            <h2>Новости в рассылке</h2>
+        </div>
+        <div class="news_mailing_bl">
+            <div class="item_news_mailing">
+                <a href="#">
+                    <div class="icon_nm" style="background-image: url('img/icon_nm1.jpg');"></div>
+                    <div class="item_news_mailing_text_block">
+                        <b>Какая боль, какая боль...</b>
+                        <p>Клиент букмекера проиграл 2 млн рублей по ставке на Россию в полуфинале ЧМ-2019</p>
+                    </div>
+                </a>
+            </div>
+            <div class="item_news_mailing">
+                <a href="#">
+                    <div class="icon_nm" style="background-image: url('img/icon_nm2.jpg');"></div>
+                    <div class="item_news_mailing_text_block">
+                        <b>Ставки на «Игру престолов»: кто займет Железный трон?</b>
+                        <p>Мы приготовили гид по ставкам на финальный сезон саги.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="item_news_mailing">
+                <a href="#">
+                    <div class="icon_nm" style="background-image: url('img/icon_nm1.jpg');"></div>
+                    <div class="item_news_mailing_text_block">
+                        <b>Какая боль, какая боль...</b>
+                        <p>Клиент букмекера проиграл 2 млн рублей по ставке на Россию в полуфинале ЧМ-2019</p>
+                    </div>
+                </a>
+            </div>
+            <div class="item_news_mailing">
+                <a href="#">
+                    <div class="icon_nm" style="background-image: url('img/icon_nm2.jpg');"></div>
+                    <div class="item_news_mailing_text_block">
+                        <b>Ставки на «Игру престолов»: кто займет Железный трон?</b>
+                        <p>Мы приготовили гид по ставкам на финальный сезон саги.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{ 
+<script type="text/javascript">
+    
+    $('#calc_button').on('click', function () {
+
+        var date = $('#datepicker').datepicker('getDate');
+        console.log(date);
+        $.ajax({
+            type: 'GET',
+            url: '/Home/CalcSumWin',
+            data: {
+                sum: $('#rate').val()
+            },
+            async: true,
+            success: function (res) {
+                $('.form_price_win_block').css({ opacity: 1 });
+                $('.price_win').text(res + ' рублей');
+            }
+        });
+    });
+    console.log(document.location.href);
+    if (document.location.href.indexOf('popular') != -1) {
+        $('.btn_profitable').addClass('btn_stat_disactive');
+        $('.btn_popular').addClass('btn_stat_active');
+        
+        if (window.innerWidth < 900) {
+            $([document.documentElement, document.body]).animate({
+            scrollTop: $(".statistics").offset().top
+        }, 600);
+        }
+        
+    }
+    else if (document.location.href.indexOf('price') != -1) {
+        $('.btn_popular').addClass('btn_stat_disactive');
+        $('.btn_profitable').addClass('btn_stat_active');
+        if (window.innerWidth < 900) {
+            $([document.documentElement, document.body]).animate({
+            scrollTop: $(".statistics").offset().top
+        }, 600);
+        }
+    }
+    else {
+        $('.btn_popular').addClass('btn_stat_disactive');
+        $('.btn_profitable').addClass('btn_stat_active');
+        
+    }
+
+    $('.btn_profitable').on('click', function (event) {
+         event.preventDefault();
+        var date = $('#datepicker').datepicker('getDate');
+        if(date.getDate() == 1){
+              window.location.href = '/Home/Stat?month=' + (date.getUTCMonth() + 1) + '&day=' + date.getDate() + '&sortBy=price';   
+        }
+        else{
+              window.location.href = '/Home/Stat?month=' + (date.getUTCMonth() + 0) + '&day=' + date.getDate() + '&sortBy=price';      
+        }
+           
+    });
+    $('.btn_popular').on('click', function (event) {
+         event.preventDefault();
+        var date = $('#datepicker').datepicker('getDate');
+        if(date.getDate() == 1){
+            window.location.href = '/Home/Stat?month=' + (date.getUTCMonth() + 1) + '&day=' + date.getDate() + '&sortBy=popular';
+        }
+        else{
+            window.location.href = '/Home/Stat?month=' + (date.getUTCMonth() + 0) + '&day=' + date.getDate() + '&sortBy=popular';
+        }
+       
+            
+    });
+    // //Календарь
+    $('#datepicker').datepicker({
+       autoSize: true,
+       monthNames : ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+       dayNamesMin: ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'],
+        onSelect: function (dateStr) {
+            // $('#calender').multiDatesPicker('resetDates', true);
+            var date = $(this).datepicker('getDate');
+            if(date.getDate() == 1){
+                        window.location.href = '/Home/Stat?month=' + (date.getUTCMonth() + 1) + '&day=' + date.getDate() + '';
+                    }
+                    else{
+                        window.location.href = '/Home/Stat?month=' + date.getUTCMonth() + '&day=' + date.getDate() + '';
+                    }
+            
+           
+        }
+    });
+
+    $('#datepicker').datepicker("setDate", new Date(2019,@ViewBag.Month,@ViewBag.Day) );
+
+
+    
+</script>
+}
+

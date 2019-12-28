@@ -1,0 +1,1667 @@
+﻿@model Smsbet.Web.ViewModels.MainPageViewModel
+@{
+    ViewData["Title"] = "Smsbet в России – онлайн сервис спортивных прогнозов.";
+}
+
+<section class="best_forecasts">
+    <div class="container">
+        <div class="best_forecasts_block">
+            <div class="best_forecasts_bl">
+                <div class="item_best_forecasts_text">
+                    <h1>
+                        Лучшие прогнозы<br>
+                        в вашем смартфоне
+                    </h1>
+                    <p>
+                        Подпишись на рассылку и получай СМС<br>
+                        уведомления с спортивными прогнозами прямо<br>
+                        на свой смартфон
+                    </p>
+                </div>
+                <div class="smart_icon">
+                    <img src="img/smart_icon.png" alt="картинка">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="disciplines">
+    <div class="big_container">
+        <div class="disciplines_block">
+            <ul class="list_disciplines">
+                <li>
+                    <a class="active" href="#tab_disciplines1">
+                        <div class="icon_list_disciplines icon_list_disciplines1"></div>
+                        все
+                    </a>
+                </li>
+                @if (Model.Forecasts.Where(w => w.Game == "Футбол").Count() > 0)
+                {
+                    <li>
+                        <a href="#tab_disciplines2">
+                            <div class="icon_list_disciplines icon_list_disciplines2"></div>
+                            футбол
+                        </a>
+                    </li>
+                }
+                @if (Model.Forecasts.Where(w => w.Game == "Кибер хоккей" || w.Game == "Кибер баскетбол" || w.Game == "Кибер футбол").Count() > 0)
+                {
+                    <li>
+                        <a class="knob_disciplines_big" href="#tab_disciplines3">
+                            <div class="icon_list_disciplines icon_list_disciplines3"></div>
+                            Киберхоккей
+                        </a>
+                    </li>
+                }
+                @if (Model.Forecasts.Where(w => w.Game == "Хоккей").Count() > 0)
+                {
+                    <li>
+                        <a href="#tab_disciplines4">
+                            <div class="icon_list_disciplines icon_list_disciplines4"></div>
+                            хоккей
+                        </a>
+                    </li>
+                }
+                @if (Model.Forecasts.Where(w => w.Game == "Теннис").Count() > 0)
+                {
+                    <li>
+                        <a href="#tab_disciplines5">
+                            <div class="icon_list_disciplines icon_list_disciplines5"></div>
+                            теннис
+                        </a>
+                    </li>
+                }
+
+                
+            </ul>
+            <div class="container">
+                <div id="tab_disciplines1" class="tab_disciplines_content active" style="">
+                    <div class="tab_disciplines_bl">
+                        @foreach (var itm in Model.Forecasts.Where(w => w.Status == "Sale"))
+                        {
+                            <div class="item_disciplines">
+                                <div class="item_disciplines_info_block">
+                                    <ul class="list_item_disciplines_info">
+                                        <li class="item_list_disciplines">
+                                            <div class="item_disciplines_date">
+
+                                                <div class="icon_disciplines" style="background-image: url(@Html.Raw($"'https://smsbet.ru/img/all/{itm.ChampionatName}.png'"));color:black!important;width:60px;height:45px;"></div>
+
+
+                                                <div class="disciplines_date">
+                                                    <span>
+                                                        @if (itm.StartTime.Day < 10)
+                                                        {
+                                                            <span>0</span><span>@itm.StartTime.Day</span> 
+                                                        }
+                                                        else
+                                                        {
+                                                            @itm.StartTime.Day  
+                                                        }/
+                                                        @if (@itm.StartTime.DayOfWeek.ToString() == "Tuesday")
+                                                        {
+                                                            <span>ВТ.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Monday")
+                                                        {
+                                                            <span>ПН.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Wednesday")
+                                                        {
+                                                            <span>СР.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Thursday")
+                                                        {
+                                                            <span>ЧТ.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Friday")
+                                                        {
+                                                            <span>ПТ.</span>
+                                                        }
+
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Saturday")
+                                                        {
+                                                            <span>СБ.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Sunday")
+                                                        {
+                                                            <span>ВС.</span>
+                                                        }
+
+
+
+
+                                                        / 
+                                                        @if (itm.StartTime.Hour.ToString().Length == 1)
+                                                        {
+                                                            <span>0</span><span>@itm.StartTime.Hour</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            @itm.StartTime.Hour 
+                                                        }
+                                                        
+                                                        :
+                                                        @if (itm.StartTime.Minute == 0)
+                                                        {
+                                                            <span>00</span>
+                                                        }
+                                                        else if(itm.StartTime.Minute < 10)
+                                                        {
+                                                            <span>0</span><span>@itm.StartTime.Minute</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            @itm.StartTime.Minute
+                                                        }
+
+                                                    </span>
+
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="item_list_disciplines">
+                                            <div class="coefficient_block">
+                                                <span class="text_list_info">Коэффициент</span>
+                                                <b class="coefficien_numbers">@itm.IntervalKoof</b>
+                                            </div>
+                                        </li>
+                                        <li class="item_list_disciplines">
+                                            <div class="disciplines_lines_block">
+                                                <span class="text_list_info">В линии</span>
+                                                <div class="bookmakers_line_bl">
+                                                    <ul class="list_bookmakers_line">
+                                                        @if(itm.Bookmaker.Split(", ").Count() > 0)
+                                                        {
+                                                            <li>
+                                                            <a href="#">
+                                                                @if (itm.Bookmaker.Split(", ")[0] == "Фонбет")
+                                                                {
+                                                                    <img src="//smsbet.ru/img/bookmakers/1.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Bwin")
+                                                                {
+                                                                    <img src="//Ssmsbet.ru/img/bookmakers/2.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Лига ставок")
+                                                                {
+                                                                    <img src="//smsbet.ru/img/bookmakers/3.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Олимп")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/4.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Пари матч")
+                                                                {
+                                                                    <img src="//smsbet.ru/img/bookmakers/5.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Bet City")
+                                                                {
+                                                                    <img src="//smsbet.ru/img/bookmakers/6.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "1xBet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/7.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Балт Бет")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/8.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Tennisi Bet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/9.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Leon")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/10.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Winline")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/11.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Marathon Bet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/12.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+
+                                                            </a>
+                                                        </li>
+                                                        }
+                                                        
+                                                        @if(itm.Bookmaker.Split(", ").Count() > 1)
+                                                        {
+                                                            <li>
+                                                            <a href="#">
+                                                                @if (itm.Bookmaker.Split(", ")[1] == "Фонбет")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/1.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Bwin")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/2.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Лига ставок")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/3.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Олимп")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/4.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Пари матч")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/5.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Bet City")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/6.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "1xBet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/7.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Балт Бет")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/8.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Tennisi Bet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/9.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Leon")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/10.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Winline")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/11.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Marathon Bet")
+                                                                {
+                                                                    <img src="//smsbet.ru/img/bookmakers/12.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                            </a>
+                                                        </li>
+                                                        }
+                                                        @if(itm.Bookmaker.Split(", ").Count() > 2)
+                                                        {
+<li>
+                                                            <a href="#">
+                                                                @if (itm.Bookmaker.Split(", ")[2] == "Фонбет")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/1.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Bwin")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/2.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Лига ставок")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/3.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Олимп")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/4.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Пари матч")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/5.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Bet City")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/6.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "1xBet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/7.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Балт Бет")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/8.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Tennisi Bet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/9.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Leon")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/10.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Winline")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/11.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Marathon Bet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/12.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                            </a>
+                                                        </li>
+
+                                                        }
+                                                        
+                                                        @if (itm.Bookmaker.Split(',').Count() > 3)
+                                                        {
+                                                            <li>
+                                                                <a class="all_bookmakers_line" href="#">Еще (@(itm.Bookmaker.Split(',').Count() - 3)) </a>
+                                                                <p hidden>@itm.Bookmaker</p>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="knob">
+
+                                    <a asp-action="Info" asp-controller="Home" asp-route-forecastId="@itm.Id" asp-route-userEmail="@User.Identity.Name" class="btn">ПОДРОБНЕЕ</a>
+
+                                </div>
+                            </div>
+
+
+                        }
+                    </div>
+                </div>
+                <div id="tab_disciplines2" class="tab_disciplines_content active" style="">
+                    <div class="tab_disciplines_bl">
+                        @foreach (var itm in Model.Forecasts.Where(w => w.Game == "Футбол" && w.Status == "Sale"))
+                        {
+                            <div class="item_disciplines">
+                                <div class="item_disciplines_info_block">
+                                    <ul class="list_item_disciplines_info">
+                                        <li class="item_list_disciplines">
+                                            <div class="item_disciplines_date">
+                                                
+                                                <div class="icon_disciplines" style="background-image: url(@Html.Raw($"'https://smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/all/{itm.ChampionatName}.png'"));color:black!important;width:60px;height:45px;"></div>
+
+
+                                                <div class="disciplines_date">
+                                                    <span>
+                                                        @if (itm.StartTime.Day < 10)
+                                                        {
+                                                            <span>0</span><span>@itm.StartTime.Day</span> 
+                                                        }
+                                                        else
+                                                        {
+                                                            @itm.StartTime.Day  
+                                                        }/
+                                                        @if (@itm.StartTime.DayOfWeek.ToString() == "Tuesday")
+                                                        {
+                                                            <span>ВТ.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Monday")
+                                                        {
+                                                            <span>ПН.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Wednesday")
+                                                        {
+                                                            <span>СР.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Thursday")
+                                                        {
+                                                            <span>ЧТ.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Friday")
+                                                        {
+                                                            <span>ПТ.</span>
+                                                        }
+
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Saturday")
+                                                        {
+                                                            <span>СБ.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Sunday")
+                                                        {
+                                                            <span>ВС.</span>
+                                                        }
+
+
+
+                                                        /
+                                                        @if (itm.StartTime.Hour.ToString().Length == 1)
+                                                        {
+                                                            <span>0</span><span>@itm.StartTime.Hour</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            @itm.StartTime.Hour 
+                                                        }
+                                                        
+                                                        :
+                                                        @if (itm.StartTime.Minute == 0)
+                                                        {
+                                                            <span>00</span>
+                                                        }
+                                                        else if(itm.StartTime.Minute < 10)
+                                                        {
+                                                            <span>0</span><span>@itm.StartTime.Minute</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            @itm.StartTime.Minute
+                                                        }
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="item_list_disciplines">
+                                            <div class="coefficient_block">
+                                                <span class="text_list_info">Коэффициент</span>
+                                                <b class="coefficien_numbers">@itm.IntervalKoof</b>
+                                            </div>
+                                        </li>
+                                        <li class="item_list_disciplines">
+                                            <div class="disciplines_lines_block">
+                                                <span class="text_list_info">В линии</span>
+                                                <div class="bookmakers_line_bl">
+                                                    <ul class="list_bookmakers_line">
+                                                        @if (itm.Bookmaker.Split(", ").Count() > 0)
+                                                        {
+                                                            <li>
+                                                                <a href="#">
+                                                                    @if (itm.Bookmaker.Split(", ")[0] == "Фонбет")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/1.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[0] == "Bwin")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/2.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[0] == "Лига ставок")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/3.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[0] == "Олимп")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/4.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[0] == "Пари матч")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/5.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[0] == "Bet City")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/6.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[0] == "1xBet")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/7.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[0] == "Балт Бет")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/8.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[0] == "Tennisi Bet")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/9.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[0] == "Leon")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/10.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[0] == "Winline")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/11.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[0] == "Marathon Bet")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/12.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+
+                                                                </a>
+                                                            </li>
+                                                        }
+
+                                                        @if (itm.Bookmaker.Split(", ").Count() > 1)
+                                                        {
+                                                            <li>
+                                                                <a href="#">
+                                                                    @if (itm.Bookmaker.Split(", ")[1] == "Фонбет")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/1.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[1] == "Bwin")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/2.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[1] == "Лига ставок")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/3.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[1] == "Олимп")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/4.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[1] == "Пари матч")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/5.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[1] == "Bet City")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/6.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[1] == "1xBet")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/7.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[1] == "Балт Бет")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/8.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[1] == "Tennisi Bet")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/9.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[1] == "Leon")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/10.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[1] == "Winline")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/11.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[1] == "Marathon Bet")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/12.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                        @if (itm.Bookmaker.Split(", ").Count() > 2)
+                                                        {
+                                                            <li>
+                                                                <a href="#">
+                                                                    @if (itm.Bookmaker.Split(", ")[2] == "Фонбет")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/1.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[2] == "Bwin")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/2.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[2] == "Лига ставок")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/3.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[2] == "Олимп")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/4.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[2] == "Пари матч")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/5.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[2] == "Bet City")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/6.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[2] == "1xBet")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/7.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[2] == "Балт Бет")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/8.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[2] == "Tennisi Bet")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/9.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[2] == "Leon")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/10.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[2] == "Winline")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/11.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                    else if (itm.Bookmaker.Split(", ")[2] == "Marathon Bet")
+                                                                    {
+                                                                        <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/12.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                    }
+                                                                </a>
+                                                            </li>
+
+                                                        }
+
+                                                        @if (itm.Bookmaker.Split(',').Count() > 3)
+                                                        {
+                                                            <li>
+                                                                <a class="all_bookmakers_line" href="#">Еще (@(itm.Bookmaker.Split(',').Count() - 3)) </a>
+                                                                <p hidden>@itm.Bookmaker</p>
+                                                            </li>
+                                                        }
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="knob">
+
+                                        <a asp-action="Info" asp-controller="Home" asp-route-forecastId="@itm.Id" asp-route-userEmail="@User.Identity.Name" class="btn">ПОДРОБНЕЕ</a>
+
+                                </div>
+                            </div>
+
+
+                        }
+
+                    </div>
+                </div>
+                <div id="tab_disciplines3" class="tab_disciplines_content active" style="">
+                    <div class="tab_disciplines_bl">
+                        @foreach (var itm in Model.Forecasts.Where(w => (w.Game == "Кибер хоккей" || w.Game == "Кибер баскетбол" || w.Game == "Кибер футбол") && w.Status == "Sale"))
+                        {
+                            <div class="item_disciplines">
+                                <div class="item_disciplines_info_block">
+                                    <ul class="list_item_disciplines_info">
+                                        <li class="item_list_disciplines">
+                                            <div class="item_disciplines_date">
+                                                
+                                                <div class="icon_disciplines" style="background-image: url(@Html.Raw($"'https://smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/all/{itm.ChampionatName}.png'"));color:black!important;width:60px;height:45px;"></div>
+
+
+                                                <div class="disciplines_date">
+                                                    <span>
+                                                        @if (itm.StartTime.Day < 10)
+                                                        {
+                                                            <span>0</span><span>@itm.StartTime.Day</span> 
+                                                        }
+                                                        else
+                                                        {
+                                                            @itm.StartTime.Day  
+                                                        }/
+                                                        @if (@itm.StartTime.DayOfWeek.ToString() == "Tuesday")
+                                                        {
+                                                            <span>ВТ.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Monday")
+                                                        {
+                                                            <span>ПН.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Wednesday")
+                                                        {
+                                                            <span>СР.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Thursday")
+                                                        {
+                                                            <span>ЧТ.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Friday")
+                                                        {
+                                                            <span>ПТ.</span>
+                                                        }
+
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Saturday")
+                                                        {
+                                                            <span>СБ.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Sunday")
+                                                        {
+                                                            <span>ВС.</span>
+                                                        }
+
+
+
+                                                        /
+                                                        @if (itm.StartTime.Hour.ToString().Length == 1)
+                                                        {
+                                                            <span>0</span><span>@itm.StartTime.Hour</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            @itm.StartTime.Hour 
+                                                        }
+                                                        @if (itm.StartTime.Minute == 0)
+                                                        {
+                                                            <span>:</span><span>00</span>
+                                                        }
+                                                        else if(itm.StartTime.Minute < 10)
+                                                        {
+                                                            <span>:</span><span>0</span><span>@itm.StartTime.Minute</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>:</span>@itm.StartTime.Minute
+                                                        }
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="item_list_disciplines">
+                                            <div class="coefficient_block">
+                                                <span class="text_list_info">Коэффициент</span>
+                                                <b class="coefficien_numbers">@itm.IntervalKoof</b>
+                                            </div>
+                                        </li>
+                                        <li class="item_list_disciplines">
+                                            <div class="disciplines_lines_block">
+                                                <span class="text_list_info">В линии</span>
+                                                <div class="bookmakers_line_bl">
+                                                    <ul class="list_bookmakers_line">
+                                                        @if(itm.Bookmaker.Split(", ").Count() > 0)
+                                                        {
+                                                            <li>
+                                                            <a href="#">
+                                                                @if (itm.Bookmaker.Split(", ")[0] == "Фонбет")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/1.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Bwin")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/2.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Лига ставок")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/3.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Олимп")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/4.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Пари матч")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/5.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Bet City")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/6.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "1xBet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/7.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Балт Бет")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/8.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Tennisi Bet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/9.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Leon")
+                                                                {
+                                                                    <img src="//smsbet.ru/img/bookmakers/10.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Winline")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/11.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Marathon Bet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/12.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+
+                                                            </a>
+                                                        </li>
+                                                        }
+                                                        
+                                                        @if(itm.Bookmaker.Split(", ").Count() > 1)
+                                                        {
+                                                            <li>
+                                                            <a href="#">
+                                                                @if (itm.Bookmaker.Split(", ")[1] == "Фонбет")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/1.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Bwin")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/2.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Лига ставок")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/3.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Олимп")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/4.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Пари матч")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/5.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Bet City")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/6.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "1xBet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/7.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Балт Бет")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/8.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Tennisi Bet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/9.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Leon")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/10.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Winline")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/11.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Marathon Bet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/12.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                            </a>
+                                                        </li>
+                                                        }
+                                                        @if(itm.Bookmaker.Split(", ").Count() > 2)
+                                                        {
+<li>
+                                                            <a href="#">
+                                                                @if (itm.Bookmaker.Split(", ")[2] == "Фонбет")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/1.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Bwin")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/2.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Лига ставок")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/3.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Олимп")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/4.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Пари матч")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/5.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Bet City")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/6.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "1xBet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/7.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Балт Бет")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/8.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Tennisi Bet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/9.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Leon")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/10.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Winline")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/11.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Marathon Bet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/12.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                            </a>
+                                                        </li>
+
+                                                        }
+
+                                                        @if (itm.Bookmaker.Split(',').Count() > 3)
+                                                        {
+                                                            <li>
+                                                                <a class="all_bookmakers_line" href="#">Еще (@(itm.Bookmaker.Split(',').Count() - 3)) </a>
+                                                                <p hidden>@itm.Bookmaker</p>
+                                                            </li>
+                                                        }
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="knob">
+
+                                        <a asp-action="Info" asp-controller="Home"  asp-route-forecastId="@itm.Id" asp-route-userEmail="@User.Identity.Name" class="btn">ПОДРОБНЕЕ</a>
+
+
+                                </div>
+                            </div>
+
+
+
+                        }
+                    </div>
+                </div>
+                <div id="tab_disciplines4" class="tab_disciplines_content active" style="">
+                    <div class="tab_disciplines_bl">
+                        @foreach (var itm in Model.Forecasts.Where(w => w.Game == "Хоккей" && w.Status == "Sale"))
+                        {
+                            <div class="item_disciplines">
+                                <div class="item_disciplines_info_block">
+                                    <ul class="list_item_disciplines_info">
+                                        <li class="item_list_disciplines">
+                                            <div class="item_disciplines_date">
+                                                
+                                                <div class="icon_disciplines" style="background-image: url(@Html.Raw($"'https://smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/all/{itm.ChampionatName}.png'"));color:black!important;width:60px;height:45px;"></div>
+
+
+
+
+                                                <div class="disciplines_date">
+                                                    <span>
+                                                        @if (itm.StartTime.Day < 10)
+                                                        {
+                                                            <span>0</span><span>@itm.StartTime.Day</span> 
+                                                        }
+                                                        else
+                                                        {
+                                                            @itm.StartTime.Day  
+                                                        }/
+                                                        @if (@itm.StartTime.DayOfWeek.ToString() == "Tuesday")
+                                                        {
+                                                            <span>ВТ.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Monday")
+                                                        {
+                                                            <span>ПН.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Wednesday")
+                                                        {
+                                                            <span>СР.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Thursday")
+                                                        {
+                                                            <span>ЧТ.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Friday")
+                                                        {
+                                                            <span>ПТ.</span>
+                                                        }
+
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Saturday")
+                                                        {
+                                                            <span>СБ.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Sunday")
+                                                        {
+                                                            <span>ВС.</span>
+                                                        }
+
+
+
+                                                        /
+                                                        @if (itm.StartTime.Hour.ToString().Length == 1)
+                                                        {
+                                                            <span>0</span><span>@itm.StartTime.Hour</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            @itm.StartTime.Hour 
+                                                        }
+                                                        
+                                                        :
+                                                        @if (itm.StartTime.Minute == 0)
+                                                        {
+                                                            <span>00</span>
+                                                        }
+                                                        else if(itm.StartTime.Minute < 10)
+                                                        {
+                                                            <span>0</span><span>@itm.StartTime.Minute</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            @itm.StartTime.Minute
+                                                        }
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="item_list_disciplines">
+                                            <div class="coefficient_block">
+                                                <span class="text_list_info">Коэффициент</span>
+                                                <b class="coefficien_numbers">@itm.IntervalKoof</b>
+                                            </div>
+                                        </li>
+                                        <li class="item_list_disciplines">
+                                            <div class="disciplines_lines_block">
+                                                <span class="text_list_info">В линии</span>
+                                                <div class="bookmakers_line_bl">
+                                                    <ul class="list_bookmakers_line">
+                                                        @if(itm.Bookmaker.Split(", ").Count() > 0)
+                                                        {
+                                                            <li>
+                                                            <a href="#">
+                                                                @if (itm.Bookmaker.Split(", ")[0] == "Фонбет")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/1.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Bwin")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/2.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Лига ставок")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/3.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Олимп")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/4.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Пари матч")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/5.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Bet City")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/6.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "1xBet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/7.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Балт Бет")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/8.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Tennisi Bet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/9.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Leon")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/10.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Winline")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/11.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Marathon Bet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/12.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+
+                                                            </a>
+                                                        </li>
+                                                        }
+                                                        
+                                                        @if(itm.Bookmaker.Split(", ").Count() > 1)
+                                                        {
+                                                            <li>
+                                                            <a href="#">
+                                                                @if (itm.Bookmaker.Split(", ")[1] == "Фонбет")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/1.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Bwin")
+                                                                {
+                                                                    <img src="//smsbet.ru/img/bookmakers/2.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Лига ставок")
+                                                                {
+                                                                    <img src="//smsbet.ru/img/bookmakers/3.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Олимп")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/4.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Пари матч")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/5.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Bet City")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/6.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "1xBet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/7.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Балт Бет")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/8.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Tennisi Bet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/9.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Leon")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/10.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Winline")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/11.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Marathon Bet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/12.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                            </a>
+                                                        </li>
+                                                        }
+                                                        @if(itm.Bookmaker.Split(", ").Count() > 2)
+                                                        {
+<li>
+                                                            <a href="#">
+                                                                @if (itm.Bookmaker.Split(", ")[2] == "Фонбет")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/1.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Bwin")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/2.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Лига ставок")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/3.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Олимп")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/4.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Пари матч")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/5.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Bet City")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/6.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "1xBet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/7.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Балт Бет")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/8.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Tennisi Bet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/9.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Leon")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/10.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Winline")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/11.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Marathon Bet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/12.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                            </a>
+                                                        </li>
+
+                                                        }
+
+                                                        @if (itm.Bookmaker.Split(',').Count() > 3)
+                                                        {
+                                                            <li>
+                                                                <a class="all_bookmakers_line" href="#">Еще (@(itm.Bookmaker.Split(',').Count() - 3)) </a>
+                                                                <p hidden>@itm.Bookmaker</p>
+                                                            </li>
+                                                        }
+
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="knob">
+
+                                        <a asp-action="Info" asp-controller="Home" asp-route-forecastId="@itm.Id" asp-route-userEmail="@User.Identity.Name" class="btn">ПОДРОБНЕЕ</a>
+
+                                </div>
+                            </div>
+
+
+
+
+
+                        }
+                    </div>
+                </div>
+                <div id="tab_disciplines5" class="tab_disciplines_content active" style="">
+                    <div class="tab_disciplines_bl">
+                        @foreach (var itm in Model.Forecasts.Where(w => w.Game == "Теннис" && w.Status == "Sale" ))
+                        {
+                            <div class="item_disciplines">
+                                <div class="item_disciplines_info_block">
+                                    <ul class="list_item_disciplines_info">
+                                        <li class="item_list_disciplines">
+                                            <div class="item_disciplines_date">
+                                                <div class="icon_disciplines" style="background-image: url(@Html.Raw($"'https://smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/all/{itm.ChampionatName}.png'"));color:black!important;width:60px;height:45px;"></div>
+
+                                                <div class="disciplines_date">
+                                                    <span>
+                                                        @if (itm.StartTime.Day < 10)
+                                                        {
+                                                            <span>0</span><span>@itm.StartTime.Day</span> 
+                                                        }
+                                                        else
+                                                        {
+                                                            @itm.StartTime.Day  
+                                                        }
+                                                        /
+                                                        @if (@itm.StartTime.DayOfWeek.ToString() == "Tuesday")
+                                                        {
+                                                            <span>ВТ.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Monday")
+                                                        {
+                                                            <span>ПН.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Wednesday")
+                                                        {
+                                                            <span>СР.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Thursday")
+                                                        {
+                                                            <span>ЧТ.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Friday")
+                                                        {
+                                                            <span>ПТ.</span>
+                                                        }
+
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Saturday")
+                                                        {
+                                                            <span>СБ.</span>
+                                                        }
+                                                        else if (@itm.StartTime.DayOfWeek.ToString() == "Sunday")
+                                                        {
+                                                            <span>ВС.</span>
+                                                        }
+
+
+
+                                                        /
+                                                        @if (itm.StartTime.Hour.ToString().Length == 1)
+                                                        {
+                                                            <span>0</span><span>@itm.StartTime.Hour</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            @itm.StartTime.Hour
+                                                        }
+                                                        :
+                                                        @if (itm.StartTime.Minute == 0)
+                                                        {
+                                                            <span>00</span>
+                                                        }
+                                                        else if (itm.StartTime.Minute < 10)
+                                                        {
+                                                            <span>0</span><span>@itm.StartTime.Minute</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            @itm.StartTime.Minute
+                                                        }
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="item_list_disciplines">
+                                            <div class="coefficient_block">
+                                                <span class="text_list_info">Коэффициент</span>
+                                                <b class="coefficien_numbers">@itm.IntervalKoof</b>
+                                            </div>
+                                        </li>
+                                        <li class="item_list_disciplines">
+                                            <div class="disciplines_lines_block">
+                                                <span class="text_list_info">В линии</span>
+                                                <div class="bookmakers_line_bl">
+                                                    <ul class="list_bookmakers_line">
+                                                        @if(itm.Bookmaker.Split(", ").Count() > 0)
+                                                        {
+                                                            <li>
+                                                            <a href="#">
+                                                                @if (itm.Bookmaker.Split(", ")[0] == "Фонбет")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/1.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Bwin")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/2.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Лига ставок")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/3.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Олимп")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/4.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Пари матч")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/5.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Bet City")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/6.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "1xBet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/7.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Балт Бет")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.rusmsbet.ru/img/bookmakers/8.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Tennisi Bet")
+                                                                {
+                                                                    <img src="//smsbet.ru/img/bookmakers/9.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Leon")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.ru/img/bookmakers/10.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Winline")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.ru/img/bookmakers/11.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[0] == "Marathon Bet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.ru/img/bookmakers/12.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+
+                                                            </a>
+                                                        </li>
+                                                        }
+                                                        
+                                                        @if(itm.Bookmaker.Split(", ").Count() > 1)
+                                                        {
+                                                            <li>
+                                                            <a href="#">
+                                                                @if (itm.Bookmaker.Split(", ")[1] == "Фонбет")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.ru/img/bookmakers/1.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Bwin")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.ru/img/bookmakers/2.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Лига ставок")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.ru/img/bookmakers/3.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Олимп")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.ru/img/bookmakers/4.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Пари матч")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.ru/img/bookmakers/5.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Bet City")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.ru/img/bookmakers/6.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "1xBet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.ru/img/bookmakers/7.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Балт Бет")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.ru/img/bookmakers/8.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Tennisi Bet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.ru/img/bookmakers/9.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Leon")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.ru/img/bookmakers/10.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Winline")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.ru/img/bookmakers/11.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[1] == "Marathon Bet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.rusmsbet.ru/img/bookmakers/12.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                            </a>
+                                                        </li>
+                                                        }
+                                                        @if(itm.Bookmaker.Split(", ").Count() > 2)
+                                                        {
+<li>
+                                                            <a href="#">
+                                                                @if (itm.Bookmaker.Split(", ")[2] == "Фонбет")
+                                                                {
+                                                                    <img src="//smsbet.ru/img/bookmakers/1.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Bwin")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.ru/img/bookmakers/2.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Лига ставок")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.ru/img/bookmakers/3.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Олимп")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.ru/img/bookmakers/4.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Пари матч")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.ru/img/bookmakers/5.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Bet City")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.ru/img/bookmakers/6.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "1xBet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.ru/img/bookmakers/7.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Балт Бет")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.ru/img/bookmakers/8.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Tennisi Bet")
+                                                                {
+                                                                    <img src="//smsbet.rusmsbet.ru/img/bookmakers/9.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Leon")
+                                                                {
+                                                                    <img src="//smsbet.ru/img/bookmakers/10.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Winline")
+                                                                {
+                                                                    <img src="//smsbet.ru/img/bookmakers/11.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                                else if (itm.Bookmaker.Split(", ")[2] == "Marathon Bet")
+                                                                {
+                                                                    <img src="//smsbet.ru/img/bookmakers/12.png" style="max-height:14px;max-width:52px;" alt="картинка">
+                                                                }
+                                                            </a>
+                                                        </li>
+
+                                                        }
+
+                                                        @if (itm.Bookmaker.Split(',').Count() > 3)
+                                                        {
+                                                            <li>
+                                                                <a class="all_bookmakers_line" href="#">Еще (@(itm.Bookmaker.Split(',').Count() - 3)) </a>
+                                                                <p hidden>@itm.Bookmaker</p>
+                                                            </li>
+                                                        }
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="knob">
+                                     <a asp-action="Info" asp-controller="Home" asp-route-forecastId="@itm.Id" asp-route-userEmail="@User.Identity.Name" class="btn">ПОДРОБНЕЕ</a>
+
+
+                                </div>
+                            </div>
+
+
+
+
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="about_us">
+    <div class="container">
+        <div class="about_us_block">
+            <div class="item_about_us">
+                <div class="item_about_us_text_block">
+                    <b>Только надежные прогнозы</b>
+                    <p>Опыт и профессионализм наших капперов помогают им составлять точные прогнозы с максимальной вероятностью выигрыша. А идеально отлаженная система рассылки начнет мгновенно доставлять их на твой телефон сразу после оформления подписки.</p>
+                </div>
+                <div class="item_about_us_icon" style="background-image: url('img/item_about_us_icon1.png');">
+                </div>
+            </div>
+            <div class="item_about_us item_about_us_rev">
+                <div class="item_about_us_icon" style="background-image: url('img/item_about_us_icon2.png');">
+                </div>
+                <div class="item_about_us_text_block">
+                    <b>Выгодные скидки</b>
+                    <p>
+                        Мы предоставляем реальные скидки при заказе пакета из нескольких<br>
+                        прогнозов. Покупка нескольких прогнозов увеличит твои шансы на больший<br>
+                        выигрыш и позволит выгодно сэкономить.
+                    </p>
+                </div>
+            </div>
+            <div class="item_about_us">
+                <div class="item_about_us_text_block">
+                    <b>Оперативность рассылки</b>
+                    <p>
+                        SMS-сообщение с прогнозом придет на телефон ровно за час до начала события.<br>
+                        Автоматизированная рассылка безупречно точна и защищена от сбоев,<br>
+                        поэтому у тебя будет достаточно времени на то, чтобы сделать обдуманную<br>
+                        ставку.
+                    </p>
+                </div>
+                <div class="item_about_us_icon" style="background-image: url('img/item_about_us_icon3.png');">
+                </div>
+            </div>
+            <div class="item_about_us item_about_us_rev">
+                <div class="item_about_us_icon" style="background-image: url('img/item_about_us_icon4.png');">
+                </div>
+                <div class="item_about_us_text_block">
+                    <b>Прозрачная статистика</b>
+                    <p>
+                        Мы делаем всё возможное, чтобы наши прогнозы попадали в цель с наивысшей долей вероятности. Лучше всего это подтверждают цифры статистики<br>
+                        прогнозов, ознакомиться с ними может любой желающий.
+                    </p>
+                </div>
+            </div>
+            <div class="item_about_us">
+                <div class="item_about_us_text_block">
+                    <b>Гарантия возврата</b>
+                    <p>Сервис всегда возвращает клиентам деньги в тех редких случаях, когда наши прогнозы не сбываются. А если у тебя не сыграет наш PRO-прогноз, то мы вернем его стоимость в двух- или даже трехкратном размере.</p>
+                </div>
+                <div class="item_about_us_icon" style="background-image: url('img/item_about_us_icon5.png');">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="in_numbers">
+    <div class="container">
+        <div class="in_numbers_block">
+            <div class="in_numbers_bl">
+                <div class="item_in_numbers">
+                    <div class="icon_numb" style="background-image: url('img/icon_numb1.png');">
+                    </div>
+                    <div class="item_in_numbers_text_block">
+                        <b>@Model.CountSuccessForecast</b>
+                        <p>успешных прогноза</p>
+                    </div>
+                </div>
+                <div class="item_in_numbers">
+                    <div class="icon_numb" style="background-image: url('img/icon_numb2.png');">
+                    </div>
+                    <div class="item_in_numbers_text_block">
+                        <b>@Model.CountUsers</b>
+                        <p>пользователей</p>
+                    </div>
+                </div>
+                <div class="item_in_numbers">
+                    <div class="icon_numb" style="background-image: url('img/icon_numb3.png');">
+                    </div>
+                    <div class="item_in_numbers_text_block">
+                        <b>@Model.CountSms</b>
+                        <p>смс отправлено</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<section class="reviews">
+    <div class="container">
+        <div class="reviews_block">
+            <div class="reviews_bl">
+                <div class="item_reviews">
+                    <div class="icon_reviews" style="background-image: url('img/icon_reviews1.png');"></div>
+                    <div class="item_reviews_text__block">
+                        <b class="name_reviews">Александр Глебович</b>
+                        <p class="comment_reviews">Всё начинается с сущей шалости. «Я только попробую», — говоришь ты. А утром обнаруживаешь себя за компьютером и не можешь ответить, как долго просидел за ним, проходя онлайн‑курсы один за другим. Именно в этот момент всё выходит из-под контроля: базовый интенсив, продвинутый, JavaScript. И вот ты уже меняешь свою работу, жизнь и мечтаешь теперь об одном: стать ниндзя веб-разработки, в арсенале которого HTML, CSS, SVG и JavaScript.</p>
+                    </div>
+                </div>
+                <div class="item_reviews">
+                    <div class="icon_reviews" style="background-image: url('img/icon_reviews2.png');"></div>
+                    <div class="item_reviews_text__block">
+                        <b class="name_reviews">Федор Михайлович</b>
+                        <p class="comment_reviews">Обучаясь в Академии, вы сэкономите огромное количество времени и научитесь правильно писать код, работать с реальными проектами и очень легко сможете продолжить свою карьеру фронтенд-разработчика самостоятельно. А также работа с наставником даёт большой опыт работы с кодом, потому что он всегда готов помочь в трудную минуту.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="knob">
+                <a class="btn_reviews" href="#">Больше отзывов</a>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script type="text/javascript">
+        let matches = $('.disciplines_date');
+        
+        for(let i = 0; i < matches.length; i++){
+             let time = $(matches[i]);
+             time.text(time.text().replace(/\s+/g, ''));
+        }
+
+
+        $('.all_bookmakers_line').on('click', function (event) {
+            event.preventDefault();
+
+            let mass = $(this).parent().find("p").text().split(", ").splice(3, 12);
+
+            let massBookmakers = ['Фонбет', 'Bwin', 'Лига ставок', 'Олимп', 'Пари матч', 'Bet City', '1xBet', 'Балт Бет', 'Tennisi Bet', 'Leon', 'Winline', 'Marathon Bet',];
+            
+            mass.forEach((el) => {
+                let index = massBookmakers.indexOf(el) + 1;
+                $(this).parent().parent().append('<li><img src="//smsbet.ru/img/bookmakers/' + index + '.png" style="max-height:14px;max-width:52px;" alt="картинка"></li>');
+            });
+            $(this).remove();
+        })
+    </script>
+ }

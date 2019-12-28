@@ -1,0 +1,106 @@
+﻿@model  IEnumerable<Smsbet.Web.ViewModels.ForecastListViewModel>
+@{
+    ViewData["Title"] = "Forecasts";
+}
+<environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+              crossorigin="anonymous"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
+    </environment>
+<div class="container">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Игра</th>
+                <th scope="col">Название чемпионата</th>
+                <th scope="col">Коэф</th>
+                <th scope="col">Дата</th>
+                <th scope="col">Процент возварата</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Бук. Конторы</th>
+                <th scope="col">Прогноз</th>
+                <th scope="col">Действие</th>
+            </tr>
+        </thead>
+		<tbody>
+			@foreach (var forec in Model.OrderByDescending(w => w.Forecast.Status))
+			{
+				if (forec.Forecast.Status == "Sale")
+				{
+					<tr class="table-success">
+						<th scope="col">@forec.Forecast.Game</th>
+						<th scope="col">@forec.Forecast.ChampionatName</th>
+						<th scope="col">@forec.Forecast.KoofProxoda</th>
+						<th scope="col">@forec.Forecast.StartTime</th>
+						<th scope="col">@forec.Forecast.PercentReturn</th>
+						<th scope="col">@forec.Forecast.Status</th>
+						<th scope="col">@String.Join(", ", forec.Bookmakers.ToArray())</th>
+						<th scope="col">@forec.Forecast.ForecastText</th>
+                        <th scope="col">
+                            <a class="" style="padding-top:6px;" asp-action="DeleteForecast" asp-controller="Admin" asp-route-id="@forec.Forecast.Id">Удалить</a><br />
+                            <a class="" style="padding-top:6px;" asp-action="SendSmsForAll" asp-controller="Admin" asp-route-forecastId="@forec.Forecast.Id">Выслать смс</a><br />
+                            <a class="" asp-action="ChangeForecast" asp-controller="Admin" asp-route-forecastId="@forec.Forecast.Id">Изменить</a>
+                            <a class="" style="padding-top:6px;" href="#">Список купивших</a>
+                            @if (forec.Forecast.Status == "Sale")
+                            {
+                                <a class="" id="btn_stopbuy" onclick="changeStatus(@forec.Forecast.Id, 'Complete')" style="padding-top:6px;" href="#">Закрыть продажу</a>
+
+                            }
+
+                        </th>
+					</tr>
+				}
+				else
+				{
+					<tr class="table-warning">
+						<th scope="col">@forec.Forecast.Game</th>
+						<th scope="col">@forec.Forecast.ChampionatName</th>
+						<th scope="col">@forec.Forecast.KoofProxoda</th>
+						<th scope="col">@forec.Forecast.StartTime</th>
+						<th scope="col">@forec.Forecast.PercentReturn</th>
+						<th scope="col">@forec.Forecast.Status</th>
+						<th scope="col">@String.Join(", ", forec.Bookmakers.ToArray())</th>
+						<th scope="col">@forec.Forecast.ForecastText</th>
+                        <th scope="col">
+                            <a class="" style="padding-top:6px;" asp-action="DeleteForecast" asp-controller="Admin" asp-route-id="@forec.Forecast.Id">Удалить</a><br />
+                            <a class="" style="padding-top:6px;" href="#">Список купивших</a>
+
+                            @if (forec.Forecast.Status == "Complete")
+							{
+                            <a class="" id="btn_successForecast" asp-action="SetResult" asp-controller="Admin" asp-route-id="@forec.Forecast.Id" asp-route-status="Success"  style="padding-top:6px;" >Успешно</a>
+                            <a class="" id="btn_successForecast" asp-action="SetResult" asp-controller="Admin" asp-route-id="@forec.Forecast.Id" asp-route-status="Fail" style="padding-top:6px;" >Неуспешно</a>
+							}
+
+                        </th>
+					</tr>
+				}
+
+			}
+
+		</tbody>
+    </table>
+</div>
+@section  Scripts
+{
+	<script type="text/javascript">
+
+	function changeStatus(id, status ,event) {
+			$.ajax({
+				type: 'POST',
+				url: '/Admin/StopBuy',
+				data: {
+					forecastId: id
+				},
+				success: function () {
+
+				}
+			})
+		}
+	</script>
+}
+

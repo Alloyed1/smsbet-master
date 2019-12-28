@@ -1,0 +1,74 @@
+﻿@model  Smsbet.Web.ViewModels.AddForecastViewModel
+@{
+    ViewData["Title"] = "AddForecast";
+}
+
+    <div class="container">
+        <form asp-action="AddForecast" asp-controller="Admin" method="post">
+            <h4 style="margin-top: 10px">Начало игры</h4>
+            <input class="input" asp-for="StartTime" />
+            <h4 style="margin-top: 10px">Дисциплина</h4>
+            <input class="input" asp-for="Game" />
+            <h4 style="margin-top: 10px">Название чемпионата</h4>
+            <input class="input" asp-for="ChampionatName" />
+            <h4 style="margin-top: 10px">Команды</h4>
+            <input class="input" asp-for="ForecastText" />
+            <h4 style="margin-top: 10px">Прогноз</h4>
+            <input class="input" asp-for="PublicPrognoz" />
+            <h4 style="margin-top: 10px">Интервал (писать строкой)</h4>
+            <input class="input" asp-for="IntervalKoof" />
+            <h4 style="margin-top: 10px">Коэфициент прохода(страница загрузки)</h4>
+            <input class="input" asp-for="KoofProxoda" />
+            <h4 style="margin-top: 10px">Процент возврата(страница загрузки)</h4>
+            <input class="input" asp-for="PercentReturn" />
+            <h4 style="margin-top: 10px">Выберите букмейкеров</h4>
+            <input hidden class="input inbook" asp-for="Bookmaker" />
+            <input type="checkbox" class="checkbox-in" id="13" />
+            <label for="13">Все</label>
+            <input type="checkbox" class="checkbox-in" id="1" />
+            <label for="1">Фонбет</label>
+            <input type="checkbox" style="margin-top: 7px" class="checkbox-in" id="2" />
+            <label for="2">Bwin</label>
+            <input type="checkbox" style="margin-top: 7px" class="checkbox-in" id="3" />
+            <label for="3">Лига ставок</label>
+            <input type="checkbox" style="margin-top: 7px" class="checkbox-in" id="4" />
+            <label for="4">Олимп</label>
+            <input type="checkbox" style="margin-top: 7px" class="checkbox-in" id="5" />
+            <label for="5">Пари матч</label>
+            <input type="checkbox" style="margin-top: 7px" class="checkbox-in" id="6" />
+            <label for="6">Bet City</label>
+            <input type="checkbox" style="margin-top: 7px" class="checkbox-in" id="7" />
+            <label for="7">1xBet</label>
+            <input type="checkbox" style="margin-top: 7px" class="checkbox-in" id="8" />
+            <label for="8">Балт Бет</label>
+            <input type="checkbox" style="margin-top: 7px" class="checkbox-in" id="9" />
+            <label for="9">Tennisi Bet</label>
+            <input type="checkbox" style="margin-top: 7px" class="checkbox-in" id="10" />
+            <label for="10">Leon</label>
+            <input type="checkbox" style="margin-top: 7px" class="checkbox-in" id="11" />
+            <label for="11">Winline</label>
+            <input type="checkbox" style="margin-top: 7px" class="checkbox-in" id="12" />
+            <label for="12">Marathon Bet</label>
+            <button class="btn" type="submit">Создать</button>
+        </form>
+        
+    </div>
+@section Scripts
+{
+    <script type="text/javascript">
+        let massBook = [];
+        $('.checkbox-in').on('change', function () {
+
+            if (this.checked) {
+                massBook.push($('label[for=' + this.id + ']').text());
+                console.log(massBook);
+                $('.inbook').val(massBook.toString());
+            }
+            else {
+                massBook.splice(massBook.indexOf($('label[for=' + this.id + ']').text()), 1);
+                $('.inbook').val(massBook.toString());
+            }
+        })
+    </script>
+}  
+

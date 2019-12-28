@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+@*<environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+              crossorigin="anonymous"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
+    </environment>*@
+    <div class="container mt-5">
+        <a class="btn btn-info m-5" style="margin-top: 20px" asp-action="AddForecast" asp-controller="Admin">Добавить прогноз</a>
+        <a class="btn btn-info m-5" style="margin-top: 20px" asp-action="Forecasts" asp-controller="Admin">Список прогнозов</a>
+        <a class="btn btn-info m-5" style="margin-top: 20px" asp-action="GetUsers" asp-controller="Admin">Список пользователей</a>
+        <a class="btn btn-info m-5" style="margin-top: 20px" asp-action="SmsAndEmailSender" asp-controller="Admin">SMS и Email рассылка</a>
+        <a class="btn btn-info m-5" style="margin-top: 20px" asp-action="Promocodes" asp-controller="Admin">Промокоды</a>
+
+        <h4>Текст в информационное окно</h4>
+        <input width="300" type="text" class="input info_bar_admin" />
+        <a class="info_bar_save" href="#">Сохранить</a>
+
+        <h4>Процент прибыли в статистике</h4>
+        <input width="300" type="text" id="percent_plus_input" class="input percent_win_admin_input" />
+        <a class="percent_win_admin" href="#">Сохранить</a>
+    </div>
+@section Scripts{
+    <script type="text/javascript">
+
+       
+
+        $.ajax({
+            type: 'GET',
+            url: '/Home/GetInfoBar',
+            async: true,
+            success: function (res) {
+                console.log(res);
+                $('.info_bar_admin').val(res);
+            }
+        });
+        $.ajax({
+            type: 'GET',
+            url: '/Admin/GetPercentPlus',
+            async: true,
+            success: function (res) {
+                console.log(res);
+                $('#percent_plus_input').val(res);
+            }
+        });
+        $('.info_bar_save').on('click', function () {
+            $.ajax({
+                type: 'POST',
+                url: '/Home/SetInfoBar',
+                data: {
+                    text: $('.info_bar_admin').val()
+                },
+                async: true
+            });
+        });
+        $('.percent_win_admin').on('click', function () {
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/SetPercentWin',
+                data: {
+                    percent: $('.percent_win_admin_input').val()
+                },
+                async: true
+            });
+        });
+    </script>
+}
+

@@ -1,0 +1,594 @@
+@media only screen and (max-width : 1280px) {
+	.knob_account {
+		margin-right: 0;
+	}
+	.prog_win_block {
+		background: url(../img/prog_win_back.jpg)no-repeat center/cover;
+	}
+	.prog_win {
+		padding-top: 0;
+		padding-bottom: 15px;
+	}
+}
+@media only screen and (max-width : 1090px) {
+	.main_nav ul li a {
+		font-size: 14px;
+	}
+	.main_nav ul li a.active::before {
+		width: 20px;
+	}
+	.main_nav ul li a::before {
+		height: 1px;
+	}
+	.list_disciplines {
+		margin-left: 0;
+	}
+	.logo {
+		margin-left: 0;
+	}
+	.stat {
+		-ms-flex: 0 0 30%;
+		flex: 0 0 30%;
+		max-width: 30%;
+	}
+	.stat_info {
+		-ms-flex: 0 0 70%;
+		flex: 0 0 70%;
+		max-width: 70%;
+	}
+	.event_order_block {
+		max-width: 100%;
+		width: 100%;
+	}
+	.slider_add_event_block {
+		max-width: 100%;
+		width: 100%;
+	}
+}
+@media only screen and (max-width : 995px) {
+	.header {
+		padding-top: 15px;
+		padding-bottom: 20px;
+	}
+	.menuToggle {
+		display: block;
+		cursor: pointer;
+		margin-top: 4px;
+	}
+	nav.main_nav.main_nav_toggle {
+		margin: 0;
+		position: absolute;
+		width: 100%;
+		max-width: 100%;
+		top: 40px;
+		left: 0px;
+		z-index: 9999;
+		-webkit-transform: translate3d(0,0,1px);
+		transform: translate3d(0,0,1px);
+		color: #000;
+		background: #00ac5d;
+		padding: 0;
+	}
+	.main_nav ul {
+		display: block;
+	}
+	.main_nav ul li {
+		margin-right: 0;
+		max-width: 100%;
+		width: 100%;
+		text-align: center;
+		padding: 0;
+		margin: 0 0 0 0;
+		display: block;
+	}
+	.main_nav ul li a {
+		display: block;
+		padding: 15px 10px;
+		color: #fff;
+		-webkit-transition: background 0.3s;
+		-o-transition: background 0.3s;
+		transition: background 0.3s;
+	}
+	.main_nav ul li a:hover {
+		background: #067745;
+		border-top: none;
+		color: #fff;
+		border: 0;
+	}
+	.main_nav ul li a::before,
+	.main_nav ul li a:hover::before {
+		display: none;
+	}
+	.header_bl {
+		position: static;
+	}
+	.knob_account {
+		margin-right: 15px;
+		margin-left: 0;
+	}
+	.main_nav.main_nav_toggle {
+		display: none;
+	}
+	.info_window_bl p {
+		font-size: 14px;
+		line-height: 14px;
+	}
+	.best_forecasts {
+		padding-top: 30px;
+		padding-bottom: 18px;
+	}
+	.item_best_forecasts_text {
+		max-width: 100%;
+		width: 100%;
+		margin-top: 0;
+		margin-left: 0;
+		text-align: center;
+		margin-bottom: 15px;
+	}
+	.item_best_forecasts_text p {
+		font-size: 16px;
+		line-height: 18px;
+	}
+	.item_best_forecasts_text h1 {
+		font-size: 38px;
+		line-height: 38px;
+		margin-bottom: 15px;
+	}
+	.smart_icon {
+		max-width: 210px;
+		width: 100%;
+		position: static;
+		bottom: 0;
+		text-align: center;
+	}
+	.best_forecasts_bl {
+		justify-content: space-around;
+	}
+	.best_forecasts {
+		padding-top: 30px;
+		padding-bottom: 0;
+	}
+	.list_disciplines {
+		justify-content: space-between;
+		margin-bottom: 35px;
+		margin-left: 0;
+	}
+	.list_disciplines li {
+		max-width: 157px;
+		width: 100%;
+		margin-right: 0;
+	}
+	.item_disciplines {
+		-ms-flex: 0 0 33.3%;
+		flex: 0 0 33.3%;
+		max-width: 33.3%;
+		padding-left: 10px;
+		padding-right: 10px;
+		margin-bottom: 35px;
+	}
+	b.coefficien_numbers {
+		font-size: 27px;
+		line-height: 28px;
+	}
+	.disciplines .container {
+		padding: 0 0;
+	}
+	.item_about_us_icon {
+		width: 150px;
+		height: 150px;
+		background-size: 40%;
+	}
+	.item_about_us_text_block {
+		max-width: 70%;
+		width: 100%;
+	}
+	.item_about_us {
+		justify-content: space-around;
+		margin-bottom: 32px;
+	}
+	.item_about_us_text_block b {
+		font-size: 23px;
+		line-height: 23px;
+	}
+	.item_about_us_text_block p {
+		font-size: 14px;
+		line-height: 18px;
+	}
+	.item_about_us_text_block p br {
+		display: none;
+	}
+	.about_us {
+		padding-top: 25px;
+		padding-bottom: 30px;
+	}
+	.in_numbers {
+		padding-top: 40px;
+		padding-bottom: 40px;
+	}
+	.item_in_numbers_text_block b {
+		font-size: 25px;
+		line-height: 25px;
+		letter-spacing: 0;
+	}
+	.reviews {
+		padding-top: 70px;
+		padding-bottom: 70px;
+	}
+	.reviews_bl {
+		margin-bottom: 40px;
+	}
+	p.comment_reviews {
+		font-size: 14px;
+		line-height: 18px;
+	}
+	a.btn_reviews {
+		font-size: 14px;
+		line-height: 14px;
+	}
+	.footer_main_bl {
+		justify-content: space-around;
+	}
+	.btn2 {
+		font-size: 14px;
+		line-height: 14px;
+	}
+	.item_footer_main_logo {
+		width: 100%;
+		text-align: center;
+		margin-bottom: 35px;
+	}
+	.item_news_mailing {
+		-ms-flex: 0 0 50%;
+		flex: 0 0 50%;
+		max-width: 50%;
+	}
+	.one_stat {
+		font-size: 10px;
+		padding: 6px 6px;
+	}
+	.one_stat_number {
+		font-size: 9px;
+	}
+	.btn_all_develop {
+		font-size: 12px;
+	}
+	.btn_all_develop span::before {
+		top: 4px;
+	}
+	.stat_info_block ul {
+		margin-bottom: 15px;
+	}
+	.news_mailing {
+		padding-top: 11px;
+		padding-bottom: 70px;
+	}
+	.btn_profitable {
+		font-size: 12px;
+	}
+	.btn_popular {
+		font-size: 12px;
+	}
+	.knob_stat_bl {
+		max-width: 345px;
+		width: 100%;
+	}
+	.list_order_steps li:nth-child(2)::before {
+		left: 97px;
+		width: 81px;
+	}
+	.item_glav_info_load {
+		max-width: 30%;
+		width: 100%;
+		text-align: center;
+	}
+}
+@media only screen and (max-width : 730px) {
+	.item_disciplines {
+		-ms-flex: 0 0 50%;
+		flex: 0 0 50%;
+		max-width: 50%;
+	}
+	.list_disciplines {
+		justify-content: space-around;
+		margin-bottom: 35px;
+	}
+	.list_disciplines li {
+		max-width: 48%;
+		width: 100%;
+		margin-bottom: 15px;
+	}
+	.icon_list_disciplines.icon_list_disciplines3 {
+		top: 11px;
+		left: 21px;
+	}
+	.item_about_us_text_block {
+		max-width: 100%;
+		width: 100%;
+		order: 2;
+		text-align: center;
+	}
+	.item_about_us_icon {
+		width: 120px;
+		height: 120px;
+		background-size: 40%;
+		margin-bottom: 15px;
+	}
+	.item_about_us_text_block b {
+		font-size: 20px;
+		line-height: 20px;
+	}
+	.in_numbers_bl {
+		justify-content: space-around;
+	}
+	.item_in_numbers {
+		max-width: 49%;
+		width: 100%;
+		margin-bottom: 25px;
+	}
+	.item_in_numbers_text_block b {
+		font-size: 20px;
+		line-height: 20px;
+		letter-spacing: 0;
+	}
+	.item_in_numbers_text_block p {
+		font-size: 14px;
+		line-height: 14px;
+		font-weight: 500;
+	}
+	b.name_reviews {
+		margin-bottom: 10px;
+	}
+	.stat_info {
+		-ms-flex: 0 0 100%;
+		flex: 0 0 100%;
+		max-width: 100%;
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+	.stat {
+		-ms-flex: 0 0 35%;
+		flex: 0 0 35%;
+		max-width: 35%;
+		margin-bottom: 25px;
+	}
+}
+@media only screen and (max-width : 550px) {
+	.close_info_window {
+		left: 94%;
+	}
+	.pop_up {
+		width: 90%;
+		min-height: auto;
+	}
+	.polit p {
+		font-size: 11px;
+		line-height: 12px;
+	}
+	.polit p a {
+		font-size: 11px;
+		line-height: 12px;
+	}
+	.item_best_forecasts_text h1 {
+		font-size: 27px;
+		line-height: 27px;
+		margin-bottom: 15px;
+	}
+	.item_best_forecasts_text p {
+		font-size: 14px;
+		line-height: 16px;
+	}
+	.smart_icon {
+		max-width: 145px;
+		width: 100%;
+	}
+	.item_disciplines {
+		-ms-flex: 0 0 85%;
+		flex: 0 0 85%;
+		max-width: 85%;
+		margin-bottom: 25px;
+	}
+	.tab_disciplines_bl {
+		justify-content: space-around;
+	}
+	.item_disciplines_info_block {
+		padding: 5px 25px 3px 25px;
+	}
+	.item_disciplines:last-child {
+		margin-bottom: 0;
+	}
+	b.coefficien_numbers {
+		font-size: 21px;
+		line-height: 21px;
+	}
+	.list_disciplines li a {
+		font-size: 12px;
+	}
+	.logo {
+		width: 145px;
+	}
+	.item_footer_main {
+		max-width: 100%;
+		width: 100%;
+		text-align: center;
+		margin-bottom: 15px;
+	}
+	.item_footer_main_nav {
+		margin-bottom: 35px;
+	}
+	.mailing_block {
+		margin-bottom: 42px;
+		text-align: center;
+	}
+	.item_reviews_text__block {
+		max-width: 100%;
+		width: 100%;
+	}
+	.all_form_block {
+		padding: 0 10px;
+	}
+	.pop_up b {
+		font-size: 24px;
+	}
+	.stat {
+		-ms-flex: 0 0 100%;
+		flex: 0 0 100%;
+		max-width: 100%;
+		margin-bottom: 25px;
+	}
+	.knob_stat_bl {
+		max-width: 100%;
+		width: 100%;
+		justify-content: flex-end;
+	}
+	.form_block_prog_win ul.list_form li {
+		width: 100%;
+	}
+	.prog_win .big_container {
+		padding: 0;
+	}
+	.prog_win_block {
+		padding-top: 38px;
+		padding-bottom: 28px;
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+	.prog_win_bl h2 {
+		margin-bottom: 15px;
+	}
+	.form_price_win_block {
+		margin-top: 0;
+	}
+	.one_stat td:nth-child(3) {
+		width: 15%;
+	}
+	.one_stat td:nth-child(1), .one_stat td:nth-child(2) {
+		width: 4%;
+	}
+	.one_stat td:nth-child(4), .one_stat td:nth-child(5), .one_stat td:nth-child(6) {
+		width: 8%;
+		font-size: 8px;
+	}
+	.datepicker .ui-state-default {
+		font-size: 10px;
+	}
+	.item_news_mailing {
+		-ms-flex: 0 0 100%;
+		flex: 0 0 100%;
+		max-width: 100%;
+	}
+	.statistics {
+		padding-top: 13px;
+		padding-bottom: 13px;
+	}
+	.list_order_steps {
+		margin-top: 30px;
+	}
+	.promo_form_block .list_form li {
+		width: 100%;
+	}
+	.event_order_info {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	.delete_event_order_knob {
+		margin-left: 0;
+		background-size: 70%;
+	}
+	.event_order_table {
+		font-size: 10px;
+	}
+	.form_event_order ul li {
+		flex-wrap: wrap;
+		margin-bottom: 10px;
+		justify-content: flex-end;
+	}
+	.date_event {
+		font-size: 14px;
+	}
+	.coeff_enent {
+		font-size: 14px;
+	}
+	.price_add_event {
+		font-size: 14px;
+	}
+	a.add_event_knob {
+		font-size: 11px;
+	}
+	.delete_event_order_knob {
+		margin-top: 5px;
+		background-size: 100%;
+	}
+	.swiper-slide {
+		width: 100%!important;
+	}
+	.item_slide {
+		margin: 0 auto;
+	}
+	.add_event_block h3 {
+		text-align: center;
+	}
+	.price_order_block {
+		max-width: 100%;
+		width: 100%;
+		text-align: center;
+	}
+	.list_order_steps li::before {
+		display: none;
+	}
+	.order_steps {
+		max-width: 100%;
+		width: 100%;
+	}
+	.name_event {
+		font-size: 14px;
+		line-height: 16px;
+	}
+	.time_event span {
+		font-size: 12px;
+	}
+	.header_load_event {
+		margin-bottom: 35px;
+	}
+	.glav_info_load_block h3 {
+		font-size: 16px;
+		line-height: 20px;
+		margin-bottom: 35px;
+	}
+	.item_glav_info_load {
+		max-width: 100%;
+		width: 100%;
+		text-align: center;
+		margin-bottom: 20px;
+	}
+}
+@media only screen and (max-width : 350px) {
+	.list_disciplines li {
+		max-width: 100%;
+		width: 100%;
+		margin-bottom: 15px;
+	}
+	.list_disciplines li a {
+		padding: 10px 5px 10px 5px;
+	}
+	.list_disciplines li a.knob_disciplines_big {
+		padding: 10px 5px 10px 5px;
+	}
+	.btn_profitable {
+		font-size: 9px;
+	}
+	.btn_popular {
+		font-size: 9px;
+	}
+	.list_order_steps li p {
+		font-size: 10px;
+		font-weight: 400;
+	}
+	.list_order_steps li::before {
+		display: none;
+	}
+	.event_order_table {
+		font-size: 8px;
+	}
+}

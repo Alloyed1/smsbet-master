@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewData["Title"] = "Результат матча";
+}
+<div class="container">
+    <div class="">
+        <h4>SMS Рассылка</h4>
+        <textarea type="text" id="sms-body" rows="10" cols="80" ></textarea>
+        <a type="button" id="smsSender">Отправить СМС</a>
+    </div>
+    <div class="">
+        <a type="button" asp-controller="Admin" asp-action="GetEmails">Получить EMAIL адресса</a>
+    </div>
+    
+
+</div>
+@section Scripts
+{
+    <script type="text/javascript">
+        $('#smsSender').on('click', function() {
+          $.ajax({
+            type:'POST',
+            url:'/Admin/SendSMSAll',
+            data:{
+                body: $('#sms-body').val()
+            },
+            success: function() {
+              console.log('Успешно!');
+            }
+          })
+        });
+    </script>
+}

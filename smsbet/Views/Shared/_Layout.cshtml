@@ -1,0 +1,517 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/img/favicon/favicon-16x16.png">
+    <link rel="mask-icon" href="~/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="~/libs/fancybox/jquery.fancybox.css">
+    <link rel="stylesheet" href="~/css/normalize.css">
+    <link rel="stylesheet" href="~/css/fonts.css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/main.css">
+    <link rel="stylesheet" href="~/css/media.css">
+    <link rel="stylesheet" href="~/css/alertify.min.css" />
+    <!-- include a theme -->
+    <link rel="stylesheet" href="~/css/default.min.css" />
+    <meta name="yandex-verification" content="efb4dc98d0277045" />
+    <title>@ViewData["Title"]</title>
+
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <div class="wrapper_block">
+            <div id="infoBlock">
+
+            </div>
+
+            <header class="header">
+                <div class="big_container">
+                    <div class="header_block">
+                        <div class="header_bl">
+                            <div class="logo">
+                                <a asp-action="Index" asp-controller="Home">
+                                    <img src="~/img/logo.png" alt="лого">
+                                </a>
+                            </div>
+                            <div class="nav_header">
+                                <nav class="main_nav main_nav_toggle">
+                                    <ul>
+                                        <li>
+                                            <a  asp-action="Stat" asp-controller="Home">Статистика</a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#">Поддержка</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Вакансии</a>
+                                        </li>
+
+                                    </ul>
+                                </nav>
+                                @if (!User.Identity.IsAuthenticated)
+                                {
+                                    
+                                    <div class="knob_account">
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <a id="account_btn" asp-action="Card" asp-controller="Account">
+                                                <img src="~/img/icon_account.png" alt="картанка">
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a class="fancybox" id="account_btn" href="#authorization">
+                                                <img src="~/img/icon_account.png" alt="картанка">
+                                            </a>
+                                        }
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    
+                                    <div class="knob_account">
+                                        <a class="lk-active" href="#">
+                                            <span class="number-login"></span>
+                                        </a>
+                                        <div class="hidden-lk-active-block">
+                                            <div class="lk-balance-block">
+                                                <span>Баланс</span>
+                                                <div class="balance">100 ₽</div>
+                                            </div>
+                                            <div class="knob-go-balance">
+                                                <a class="refill fancybox" href="#payBalance">Пополнить</a>
+                                            </div>
+                                            <ul class="list-lk-active">
+                                                <li class="list-check">
+                                                    <div class="list-txt-block">
+                                                        SMS рассылка
+                                                    </div>
+                                                    <div class="check-push-lk">
+                                                        <input id="checkbox-push1" type="checkbox" checked="">
+                                                        <label for="checkbox-push1"></label>
+                                                    </div>
+                                                </li>
+                                                <li class="list-check">
+                                                    <div class="list-txt-block">
+                                                        Email рассылка
+                                                    </div>
+                                                    <div class="check-push-lk">
+                                                        <input id="checkbox-push2" type="checkbox">
+                                                        <label for="checkbox-push2"></label>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Вывести средства</a>
+                                                </li>
+                                                <li>
+                                                    <a asp-controller="Account" asp-action="Index">Настройки</a>
+                                                </li>
+                                            </ul>
+                                            <div class="info-acc">
+                                                <span>Информация об аккаунте</span>
+                                                <div class="phone-acc"></div>
+                                                <div class="mail-acc"></div>
+                                            </div>
+                                            <div class="quit-acc">
+                                                <a class="btn-quit" asp-controller="Account" asp-action="Test">Выйти</a>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                }
+                                
+                                <div class="menuToggle">
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            @RenderBody()
+            <footer class="footer">
+                <div class="footer_main_block">
+                    <div class="container">
+                        <div class="footer_main_bl">
+                            <div class="item_footer_main_logo">
+                                <div class="logo_footer">
+                                    <a href="#">
+                                        <img src="~/img/logo_footer.png" alt="картинка">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="item_footer_main_content">
+                                <div class="item_footer_main_nav">
+                                    <div class="item_footer_main">
+                                        <b>Подписка</b>
+                                        <ul>
+                                            <li>
+                                                <a href="#">Меню</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Меню</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Меню</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="item_footer_main">
+                                        <b>Статистика</b>
+                                        <ul>
+                                            <li>
+                                                <a href="#">Меню</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Меню</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="item_footer_main">
+                                        <b>Информация</b>
+                                        <ul>
+                                            <li>
+                                                <a href="#">Меню</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Меню</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="mailing_block">
+                                    <b>Рассылка</b>
+                                    <p>
+                                        Раз в месяц мы рассказываем об интересных статьях, новых инструментах и<br>
+                                        курсах.
+                                        <a href="#">Подробнее о рассылке.</a>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="agreement_block">
+                                <ul>
+                                    <li>
+                                        <a href="#">Соглашение</a>
+                                    </li>
+                                    <li>|</li>
+                                    <li>
+                                        <a href="#">Конфидициальность</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+    </div>
+    <div class="hidden">
+        <div id="authorization" class="pop_up">
+            <b>Вход</b>
+            <p hidden style="padding-bottom: 10px; color: red;" id="incorrect_data">Неверные данные</p>
+            <form class="all_form">
+                <div class="all_form_block">
+                    <ul class="list_form">
+                        <li>
+                            <input class="phone mobile" type="tel" id="phone_input_log" name="phone" placeholder="">
+                        </li>
+                        <li>
+                            <input type="password" id="pass_input_log" placeholder="Пароль">
+                        </li>
+                        <li>
+                            <button class="button" id="signin_btn" type="button">Войти</button>
+                            <button class="button" hidden id="signin_btn_spinner" type="button"><span class="sbl-circ"></span></button>
+                        </li>
+                    </ul>
+                    <div class="knob_forgot_pass">
+                        <a class="fancybox" href="#reset_password_form">Забыли пароль?</a>
+                    </div>
+                </div>
+            </form>
+            <div class="reg_block">
+                <a class="fancybox" href="#check_in" id="reg-redirect">Регистрация</a>
+            </div>
+        </div>
+        <div id="check_in" class="pop_up">
+            <b>Регистрация</b>
+
+            <p hidden style="padding-bottom: 10px; color: red;" id="incorrect_num">Некорректный номер</p>
+            <p hidden style="padding-bottom: 10px; color: red;" id="incorrect_tel">Такой пользователь уже есть</p>
+            <p hidden style="padding-bottom: 10px; color: red;" id="incorrect_pass">Неверный пароль</p>
+            <p hidden style="padding-bottom: 10px; color: red;" id="sms_error">Ошибка отправки sms</p>
+            <form class="all_form">
+                <div class="all_form_block" id="first_reg_form">
+                    <ul class="list_form">
+                        <li>
+                            <input class="phone mobile" type="tel" id="phone_num" name="phone" placeholder="">
+                        </li>
+                        <li>
+                            <button class="button" type="button" id="get_password">Получить пароль</button>
+                            <button hidden class="button" type="button" id="get_password_spinner"><span class="sbl-circ"></span></button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="all_form_block" id="second_reg_form" hidden>
+                    <ul class="list_form">
+                        <li>
+                            <input class="phone mobile" type="text" id="pass_input" name="phone" placeholder="Пароль из sms">
+                        </li>
+                        <li>
+                            <button class="button" type="button" id="confirm_password">Подвердить пароль</button>
+                            <button hidden class="button" type="button" id="confirm_password_btn"><span class="sbl-circ"></span></button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="polit">
+                    <p>
+                        Регистрируясь на сайте, вы даёте своё согласие на обработку
+                        персональных данных в соответствии с «<a href="#">Политикой конфиденциальности</a>»
+                        и соглашаетесь с «<a href="#">Условиями оказания услуг</a>».
+                    </p>
+                </div>
+            </form>
+            <button data-fancybox-close="" class="fancybox-close-small" title="Close" id="close-register-btn"></button>
+        </div>
+        <div id="reset_password_form" class="pop_up">
+            <b>Введите телефон</b>
+
+            <p hidden style="padding-bottom: 10px; color: red;" id="incorrect_num_res">Некорректный номер</p>
+            <p hidden style="padding-bottom: 10px; color: red;" id="incorrect_tel_res">Такой пользователь уже есть</p>
+            <p hidden style="padding-bottom: 10px; color: red;" id="sms_error_res">Ошибка отправки sms</p>
+            <form class="all_form">
+                <div class="all_form_block" id="third_reg_form">
+                    <ul class="list_form">
+                        <li>
+                            <input class="phone mobile" type="tel" id="reset_pass_input" name="phone" placeholder="">
+                        </li>
+                        <li>
+                            <button class="button" type="button" id="sendsms_btn">Отправить SMS</button>
+                            <button hidden class="button" type="button" id="sendsms_btn_spinner"><span class="sbl-circ"></span></button>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+        <div id="payBalance" class="pop_up">
+                    <b>Введите сумму</b>
+            <form class="all_form">
+                        <div class="all_form_block" id="third_reg_form">
+                            <ul class="list_form">
+                                <li>
+                                    <input class="phone mobile" type="number" id="sum" >
+                                </li>
+                                <li>
+                                    <button class="button" type="button" id="payBalanceBtn">Пополнить</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+    </div>
+
+
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/libs/jquery/jquery-3.2.1.min.js"></script>
+<script src="~/libs/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/libs/multidatespicker/jquery-ui.multidatespicker.js"></script>
+    <script src="~/libs/maskedinput/jquery.inputmask.bundle.min.js"></script>
+    <script src="~/libs/swiper/swiper.min.js"></script>
+    <script src="~/libs/fancybox/jquery.fancybox.min.js"></script>
+    <script src="~/js/common.js"></script>
+<script src="~/js/alertify.min.js"></script>
+<script src="~/js/signalr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js" ></script>
+    <script type="text/javascript">
+    
+            let active = 'login';
+            $(document).on('keypress',function(e) {
+                if(e.which == 13) {
+                    switch (active) {
+                      case 'login':
+                          $('#signin_btn').click();
+                          break;
+                      case 'register':
+                          $('#get_password').click();
+                          break;
+                    }
+                }
+            });
+            
+            $('#close-register-btn').on('click', function(){
+               active = 'login'; 
+            });
+            
+            $('#reg-redirect').on('click', function() {
+                active = 'register';
+            });
+            
+            if ($.cookie("showInfoBar") == undefined || $.cookie("showInfoBar") == "0") {
+
+            $('#infoBlock').append('<div class="info_window_block"><div class="container"><div class="info_window_bl"><p class="info_bar"></p></div></div><div class="knob"><a class="close_info_window" href="#"></a></div></div>');
+    
+            $.ajax({
+                type: 'GET',
+                url: '/Home/GetInfoBar',
+                async: true,
+                success: function (res) {
+                    if (res != null) {
+                        $('.info_bar').text(res);
+                    }
+                    else {
+                        $('#infoBlock').remove();
+                    }
+
+                }
+            });
+            
+
+            $('.close_info_window').on('click', function () {
+                var date = new Date();
+                var minutes = 1;
+                date.setTime(date.getTime() + (minutes * 60 * 1000));
+                $.cookie("showInfoBar", "1", { expires: date });
+            });
+
+
+        }
+            
+     
+            $.ajax({
+                type: 'GET',
+                url: '/Home/GetUserInfo',
+                async: true,
+                success:  function(res) {
+
+                    $('.phone-acc').text(res[0]);
+                    $('.number-login').text(res[0]);
+                    
+                    if(res[0] === res[1]){
+                        $('.mail-acc').text('');
+                    }
+                    else{
+                        $('.mail-acc').text(res[1]);
+                    }
+                    
+                    $('#checkbox-push1')[0].checked = res[2] === 'True';
+                    
+                    $('#checkbox-push2')[0].checked = res[3] === 'True';         
+                    
+                    $('.balance').text(res[4] + ' ₽');
+                    
+                    
+                    
+                    
+                }
+                
+            });
+            
+            $('#checkbox-push1').on('change', function() {
+                $.ajax({
+                    type: 'GET',
+                    url:'/Home/UpdatePushing',
+                    async:true,
+                    data:{
+                        isType: 'sms',
+                        value: $('#checkbox-push1')[0].checked
+                    },
+                    success: function() {
+                      
+                    }
+                    
+                });
+                
+            });
+            
+            $('#payBalanceBtn').on('click', function() {
+                
+                let sum = $('#sum').val();
+                $.ajax({
+                    type:'GET',
+                    url:'/Home/PayBalance',
+                    async:true,
+                    data:{
+                        sum: sum
+                    },
+                    success: function(url) {
+                        window.location.href = url;
+                    }
+                })
+                
+            });
+            
+            $('#checkbox-push2').on('change', function() {
+                
+                $.ajax({
+                    type: 'GET',
+                    url:'/Home/UpdatePushing',
+                    async:true,
+                    data:{
+                        isType: 'email',
+                        value: $('#checkbox-push2')[0].checked
+                    },
+                    success: function() {
+                      
+                    }
+                    
+                });
+                
+            });
+            
+            if ($.cookie("phone") != undefined) {
+                $('[name="phone"]').val($.cookie("phone"));
+            }
+            
+            
+            let hubUrl = 'https://localhost:5001/chat';
+                    const hubConnection = new signalR.HubConnectionBuilder()
+                        .withUrl(hubUrl)
+                        .configureLogging(signalR.LogLevel.Information)
+                        .build();
+                    
+            hubConnection.on("Send", function (data) {
+                let notification = alertify.notify(data, 'success', 5, function(){  console.log('dismissed'); });
+             });
+            
+            hubConnection.start();
+            
+
+
+    </script>
+
+    @RenderSection("Scripts", required: false)
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function (m, e, t, r, i, k, a) {
+        m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
+            m[i].l = 1 * new Date(); k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+        })
+            (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(55774096, "init", {
+            clickmap: true,
+            trackLinks: true,
+            accurateTrackBounce: true,
+            webvisor: true
+        });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/55774096" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+</body>
+</html>
