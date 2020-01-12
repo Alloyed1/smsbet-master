@@ -1714,9 +1714,25 @@ input[type=number]::-webkit-outer-spin-button {
         top: 11px;
     }
 }
-@media only screen and (max-width : 350px) {
+@media only screen and (max-width : 375px) {
     .lk-active {
         padding: 7px 20px 7px 27px;
+    }
+    .hidden-lk-active-block {
+        width: 265px;
+        padding: 20px 25px;
+        border-top: 5px solid #e6e6e6;
+        position: absolute;
+        right: 26px!important;
+        top: 50px!important;
+
+        box-shadow: 0 5px 5px rgba(0, 0, 0, 0.13);
+        background-color: #ffffff;
+        z-index: 999;
+        display: none;
+    }
+    .logo{
+        max-width: 105px!important;
     }
 }
 .sec-setting {

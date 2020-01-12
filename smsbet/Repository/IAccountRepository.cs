@@ -161,7 +161,7 @@ namespace Smsbet.Web.Repository
                 string userPhone = await db.QueryFirstOrDefaultAsync<string>("SELECT PhoneNumber FROM AspNetUsers WHERE Id = @userId", new { userId = userId });
 
                 _ = _smsPusher.Send(userPhone, new List<string>(),
-                    "Вы успешно сделали покупку на сайте Smsbet.Web.ru" + Environment.NewLine +
+                    "Вы успешно сделали покупку на сайте smsbet.ru" + Environment.NewLine +
                     "За 15 минут до начала события вы получите сообщение с прогнозом. ");
                 
                 
@@ -224,8 +224,11 @@ namespace Smsbet.Web.Repository
 					if(itemsCookie != null)
 					{
 						var itemsList = itemsCookie.Split(',').Where(w => w != "").ToList();
-						foreach (var item in itemsList)
+                        var forecastsIds = (await db.QueryAsync<string>("SELECT Id FROM Forecasts")).ToList();
+                        foreach (var item in itemsList)
 						{
+                            if(!forecastsIds.Contains(item)) continue;
+                            
 							viewModel.UserCardForecasts.Add(await db.QueryFirstOrDefaultAsync<Forecasts>("SELECT StartTime, IntervalKoof, PublicPrognoz, ChampionatName, Id FROM Forecasts WHERE Id = @id", new { id = Convert.ToInt32(item) }));
 						}
 					}

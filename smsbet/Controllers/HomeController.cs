@@ -270,8 +270,8 @@ namespace Smsbet.Web.Controllers
         public async Task<IActionResult> Complete([FromBody]objectClass request)
         {
             string remoteIpAddress = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
-            var listIps = new List<string> { "185.71.76", "185.71.77", "77.75.153", "77.75.154", "2a02:5180" };
-            if(remoteIpAddress.Contains(listIps[0]) || remoteIpAddress.Contains(listIps[1]) || remoteIpAddress.Contains(listIps[2]) || remoteIpAddress.Contains(listIps[3]) || remoteIpAddress.Contains(listIps[4]))
+            var listIps = new List<string> { "185.71.76", "185.71.77", "77.75.153", "77.75.154", "2a02:5180", "127.0.0.1" };
+            if(remoteIpAddress.Contains(listIps[0]) || remoteIpAddress.Contains(listIps[1]) || remoteIpAddress.Contains(listIps[2]) || remoteIpAddress.Contains(listIps[3]) || remoteIpAddress.Contains(listIps[4]) || remoteIpAddress.Contains(listIps[5]))
             {
                 if(request.Object.status == "waiting_for_capture")
                 {
@@ -287,11 +287,14 @@ namespace Smsbet.Web.Controllers
                     var obj = JsonConvert.DeserializeObject<Object>(response.Content);
                     if(obj.status == "succeeded")
                     {
-                        if (obj.description.Contains("balance:"))
-                        {
-                            var userName = obj.description.Replace("balance:", "");
-                            await _accountRepository.CompletePayBalance(obj.Amount.value, userName);
-                        }
+                        if (obj.description != null)
+						{
+							if (obj.description.Contains("balance:"))
+							{
+								var userName = obj.description.Replace("balance:", "");
+								await _accountRepository.CompletePayBalance(obj.Amount.value, userName);
+							}
+						}                    
                         else
                         {
                             await _accountRepository.CompleteOrder(request.Object.id);

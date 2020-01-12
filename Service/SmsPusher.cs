@@ -8,7 +8,7 @@ namespace Service
 {
     public class SmsPusher : IMessagePusher
     {
-        public async Task<string> Send(string phone, IEnumerable<string> phones, string text)
+        public async Task<string> Send(string phone, List<string> phones, string text)
         {
             if (phone == null && phones == null) return "badsms";
             
@@ -30,7 +30,7 @@ namespace Service
             }
                 
             
-            var res = client.Execute(request,Method.GET );
+            var res = client.Execute(request,Method.GET);
             
             return res.Content;
 

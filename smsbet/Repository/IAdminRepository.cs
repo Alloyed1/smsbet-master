@@ -178,7 +178,7 @@ namespace Smsbet.Web.Repository
                     else if (status == "Fail")
                         _ =_smsPusher.Send(null, phonesList,
                             "К сожалению, сегодня удача не на нашей стороне. " + Environment.NewLine +
-                            "Возврат средств по купленному прогнозу переведен в личный кабинет: Smsbet.Web.ru/lk");
+                            "Возврат средств по купленному прогнозу переведен в личный кабинет: smsbet.ru/account");
 
 
 
@@ -193,11 +193,11 @@ namespace Smsbet.Web.Repository
                     else if (status == "Fail")
                         _ =_smsPusher.Send(phonesList.First(), new List<string>(), 
                             "К сожалению, сегодня удача не на нашей стороне. " + Environment.NewLine +
-                            "Возврат средств по купленному прогнозу переведен в личный кабинет: Smsbet.Web.ru/lk");
+                            "Возврат средств по купленному прогнозу переведен в личный кабинет: smsbet.ru/account");
                     
                     
                 }
-                _ =SmsPlus(phonesList.Count);
+                _ = SmsPlus(phonesList.Count);
             }
             
         }
@@ -207,8 +207,8 @@ namespace Smsbet.Web.Repository
         {
             using (var db = new SqlConnection(connectionString))
             {
-                await db.ExecuteAsync("DELETE FROM Forecasts WHERE Id = @id; DELETE FROM  BookmakerForecasts WHERE ForecastId = @id ", new { id = id });
-                await db.ExecuteAsync("DELETE FROM BasketItems WHERE ForecastId = @id", new { id = id });
+                await db.ExecuteAsync(@"DELETE FROM Forecasts WHERE Id = @id; DELETE FROM  BookmakerForecasts WHERE ForecastId = @id;
+                DELETE FROM BasketItems WHERE ForecastId = @id", new { id = id });
             }
         }
 
@@ -239,10 +239,37 @@ namespace Smsbet.Web.Repository
 				{
 					await db.ExecuteAsync("UPDATE AppSettings SET Value = (CONVERT(INT, Value) + 1) WHERE Keys = 'CountSuccessForecast'");
 				}
+                else if(status == "Fail")
+                {
+                    await Task.WhenAll(OnFailForecast(id), DeleteFromBasket(id));
+                }
+                else 
+                    await DeleteFromBasket(id);
 
-                await DeleteFromBasket(id);
+
             }
 		}
+
+        async Task OnFailForecast(int id)
+        {
+            using (var db = new DbNorthwind())
+            {
+                var userList = await db.ForecastPhonesBuy
+                    .Where(w => w.ForecastId == id)
+                    .Select(s => s.UserId)
+                    .ToListAsync();
+
+                foreach (var userId in userList)
+                {
+                    var balance = db.Users.FirstOrDefaultAsync(f => f.Id == userId).Result.Balance;
+                    await db.Users
+                        .Where(w => w.Id == userId)
+                        .Set(s => s.Balance, balance += 99)
+                        .UpdateAsync();
+                }
+                
+            }
+        }
 
 		public async Task SetFreePromocode(string code)
         {

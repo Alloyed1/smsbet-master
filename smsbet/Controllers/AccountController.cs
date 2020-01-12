@@ -16,7 +16,7 @@ namespace Smsbet.Web.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        IAccountRepository _accountRepository;
+        private readonly IAccountRepository _accountRepository;
         public AccountController(UserManager<User> userManager, IAccountRepository accountRepository, SignInManager<User> signInManager)
         {
             _userManager = userManager;
@@ -106,8 +106,7 @@ namespace Smsbet.Web.Controllers
 			{
 				Response.Cookies.Delete("itemsCard");
 			}
-			itemsCookie = Request.Cookies["itemsCard"];
-			return View(model);
+            return View(model);
 		}
 
         [HttpPost]
@@ -139,7 +138,6 @@ namespace Smsbet.Web.Controllers
             }
             return false;
         }
-
         public async Task<IActionResult> Index()
         {
             var model = await _accountRepository.GetSettingsViewModel(User.Identity.Name);

@@ -31,9 +31,10 @@ namespace Smsbet.Web.Controllers
         }
 
         [HttpGet]
-        public async Task SendSmsForAll(int forecastId)
+        public async Task<IActionResult> SendSmsForAll(int forecastId)
         {
             await _adminRepository.SendSmsForAll(forecastId);
+            return RedirectToAction("Forecasts");
         }
         [HttpGet]
         public async Task SendSmsAboutStatus(int forecastId, string status )

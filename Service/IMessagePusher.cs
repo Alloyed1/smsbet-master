@@ -6,6 +6,6 @@ namespace Service
 {
     public interface IMessagePusher
     {
-        Task<string> Send(string phone, IEnumerable<string> phones, string text);
+        Task<string> Send(string phone, List<string> phones, string text);
     }
 }

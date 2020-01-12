@@ -72,7 +72,7 @@ namespace smsbet
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IAdminRepository, AdminRepository>();
             services.AddScoped<IHomeRepository, HomeRepository>();
-            services.AddSingleton<IMessagePusher, SmsPusher >();
+            services.AddScoped<IMessagePusher, SmsPusher>();
             
             
             RecurringJob.AddOrUpdate(
