@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Hangfire;
 using Hangfire.SqlServer;
@@ -8,6 +9,7 @@ using LinqToDB.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -42,11 +44,14 @@ namespace smsbet
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+
             services.AddDbContext<ApplicationContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            
-            services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("DefaultConnection")));
-            JobStorage.Current = new SqlServerStorage(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer("Data Source=wpl19.hosting.reg.ru;Initial Catalog=u0831016_smsbedb;User Id=u0831016_smsbetuser;Password=cw42pu!QAZ;"));
+
+            JobStorage.Current = new SqlServerStorage("Data Source=wpl19.hosting.reg.ru;Initial Catalog=u0831016_smsbedb;User Id=u0831016_smsbetuser;Password=cw42pu!QAZ;");
+
+
+            services.AddHangfire(x => x.UseSqlServerStorage("Data Source=wpl19.hosting.reg.ru;Initial Catalog=u0831016_smsbedb;User Id=u0831016_smsbetuser;Password=cw42pu!QAZ;"));
             services.AddHangfireServer();
             
             services.AddSignalR();
@@ -102,9 +107,15 @@ namespace smsbet
             
 
             app.UseStaticFiles();
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
             app.UseAuthentication();
             
             app.UseHangfireDashboard();
@@ -113,6 +124,8 @@ namespace smsbet
             {
                 routes.MapHub<NotifyHub>("/chat");
             });
+
+            
 
             app.UseMvc(routes =>
             {
