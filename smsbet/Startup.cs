@@ -78,8 +78,10 @@ namespace smsbet
             services.AddScoped<IAdminRepository, AdminRepository>();
             services.AddScoped<IHomeRepository, HomeRepository>();
             services.AddScoped<IMessagePusher, SmsPusher>();
-            
-            
+
+            services.AddMemoryCache();
+
+
             RecurringJob.AddOrUpdate(
                 () => HangfireTask.CheckMathes(),
                 Cron.MinuteInterval(3));

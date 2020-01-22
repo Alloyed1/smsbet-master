@@ -12,6 +12,7 @@ using LinqToDB;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Authenticators;
@@ -28,14 +29,16 @@ namespace Smsbet.Web.Controllers
         private readonly IHomeRepository _homeRepository;
         private readonly IHttpContextAccessor _accessor;
         private readonly UserManager<User> _userManager;
-        static readonly Client _client = new Client("636277", "test_0MYGrT71SMVbgqqLI4LepYRutPbKwTrmjBicjA7_96A");
+        private IMemoryCache _cache;
+        
 
         public HomeController(IAccountRepository accountRepository, IHomeRepository homeRepository,
-            IHttpContextAccessor accessor, UserManager<User> context)
+            IHttpContextAccessor accessor, UserManager<User> context, IMemoryCache memoryCache)
         {
             _accountRepository = accountRepository;
             _homeRepository = homeRepository;
             _accessor = accessor;
+            _cache = memoryCache;
             _userManager = context;
         }
 
@@ -54,12 +57,20 @@ namespace Smsbet.Web.Controllers
         [HttpGet]
         public async Task<string> GetInfoBar()
         {
-            return await _accountRepository.GetInfoBar();
+            string response = "";
+            if (!_cache.TryGetValue("InfoBar", out response))
+            {
+                return await _accountRepository.GetInfoBar();
+            }
+
+            return response;
+
         }
 
         [HttpGet]
         public async Task<string> PayBalance(int sum)
         {
+            Client _client = new Client("636277", "test_0MYGrT71SMVbgqqLI4LepYRutPbKwTrmjBicjA7_96A");
             var newPayment = new NewPayment
             {
                 Amount = new Amount {Value = sum, Currency = "RUB"},
@@ -112,6 +123,7 @@ namespace Smsbet.Web.Controllers
 
                     },
                 };
+                Client _client = new Client("636277", "test_0MYGrT71SMVbgqqLI4LepYRutPbKwTrmjBicjA7_96A");
                 Payment payment = _client.CreatePayment(newPayment);
 
                 int orderId = await _accountRepository.AddOrder(User.Identity.Name, sum, payment.Id);
@@ -269,6 +281,7 @@ namespace Smsbet.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Complete([FromBody]objectClass request)
         {
+            Client _client = new Client("636277", "test_0MYGrT71SMVbgqqLI4LepYRutPbKwTrmjBicjA7_96A");
             string remoteIpAddress = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
             var listIps = new List<string> { "185.71.76", "185.71.77", "77.75.153", "77.75.154", "2a02:5180", "127.0.0.1" };
             if(remoteIpAddress.Contains(listIps[0]) || remoteIpAddress.Contains(listIps[1]) || remoteIpAddress.Contains(listIps[2]) || remoteIpAddress.Contains(listIps[3]) || remoteIpAddress.Contains(listIps[4]) || remoteIpAddress.Contains(listIps[5]))

@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Memory;
 using Service;
 using Smsbet.Web.Models;
 using Smsbet.Web.ViewModels;
@@ -44,12 +45,14 @@ namespace Smsbet.Web.Repository
     {
         private string connectionString;
         private readonly IMessagePusher _smsPusher;
+        private IMemoryCache _cache;
         
         public AccountRepository(IConfiguration configuration,
-            IMessagePusher smsPusher)
+            IMessagePusher smsPusher, IMemoryCache cache)
         {
             _smsPusher = smsPusher;
             connectionString = configuration.GetConnectionString("DefaultConnection");
+            _cache = cache;
         }
 
         public async Task CompletePayBalance(decimal sum, string userName)
@@ -309,8 +312,14 @@ namespace Smsbet.Web.Repository
 
             using (var db = new SqlConnection(connectionString))
             {
-                return await db.QueryFirstOrDefaultAsync<string>("SELECT Value FROM AppSettings WHERE Keys = 'InfoBar'");
+                var result = await db.QueryFirstOrDefaultAsync<string>("SELECT Value FROM AppSettings WHERE Keys = 'InfoBar'");
+                _cache.Set("InfoBar", result, new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5)
+                });
+                return result;
             }
+            
 
         }
 
@@ -320,6 +329,11 @@ namespace Smsbet.Web.Repository
             {
                 await db.ExecuteAsync("UPDATE AppSettings SET Value = @text WHERE Keys = 'InfoBar'", new { text });
             }
+
+            _cache.Set("InfoBar", text, new MemoryCacheEntryOptions()
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5)
+            });
         }
 
         public async Task<MainPageViewModel> GetMainPageView()
