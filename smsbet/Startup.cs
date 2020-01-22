@@ -79,14 +79,14 @@ namespace smsbet
             services.AddScoped<IHomeRepository, HomeRepository>();
             services.AddScoped<IMessagePusher, SmsPusher>();
 
-            services.AddMemoryCache();
+
 
             //RecurringJob.AddOrUpdate(
             //    () => new HangfireTask.CheckMathes(),
             //    Cron.MinuteInterval(3));
-            
-            
 
+            services.AddMemoryCache();
+            services.AddResponseCompression();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -108,7 +108,6 @@ namespace smsbet
             
 
             app.UseStaticFiles();
-            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
@@ -120,13 +119,13 @@ namespace smsbet
             app.UseAuthentication();
             
             app.UseHangfireDashboard();
-            
-            app.UseSignalR(routes =>
-            {
-                routes.MapHub<NotifyHub>("/chat");
-            });
 
-            
+            //app.UseSignalR(routes =>
+            //{
+            //    routes.MapHub<NotifyHub>("/chat");
+            //});
+
+            app.UseResponseCompression();
 
             app.UseMvc(routes =>
             {
