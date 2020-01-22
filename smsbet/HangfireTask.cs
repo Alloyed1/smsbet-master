@@ -1,17 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using LinqToDB;
+using Service;
 using Smsbet.Web.Migrations;
 
 namespace Smsbet.Web
 {
-    public static class HangfireTask
+    public class HangfireTask
     {
-        public async static Task CheckMathes()
+        private IMessagePusher _messagePusher;
+        public HangfireTask(IMessagePusher messagePusher)
+        {
+            _messagePusher = messagePusher;
+        }
+        public async  Task CheckMathes()
         {
             using(var db = new DbNorthwind())
+            
             {
                 var forecasts = await db.Forecasts
                     .Where(w => w.Status == "Sale" && w.StartTime.AddMinutes(-15) <= DateTime.Now)
@@ -31,26 +39,28 @@ namespace Smsbet.Web
                     if (phonesList.Count() > 1)
                     {
                         string phones = "+7" + String.Join(";+7", phonesList);
+                        await _messagePusher.Send(null, phonesList, $"Рады сообщить, что для вас готова ставка : {item.Game}. {item.ChampionatName}. {item.ForecastText}. {item.PublicPrognoz}");
 
-                        using (var client = new WebClient())
-                        {
-                            await client.DownloadStringTaskAsync(
-                                "https://smsc.ru/sys/send.php?login=Smsbet.Web&psw=Ujklujkl87&phones=" + phones + "&mes=" +
-                                $"Рады сообщить, что для вас готова ставка : {item.Game}. {item.ChampionatName}. {item.ForecastText}. {item.PublicPrognoz}");
-                        }
+                        //using (var client = new WebClient())
+                        //{
+                        //    await client.DownloadStringTaskAsync(
+                        //        "https://smsc.ru/sys/send.php?login=Smsbet.Web&psw=Ujklujkl87&phones=" + phones + "&mes=" +
+                        //        $"Рады сообщить, что для вас готова ставка : {item.Game}. {item.ChampionatName}. {item.ForecastText}. {item.PublicPrognoz}");
+                        //}
                     }
                     else if(phonesList.Any())
                     {
-                        using (var client = new WebClient())
-                        {
+                        await _messagePusher.Send(phonesList[0], new List<string>(), $"Рады сообщить, что для вас готова ставка : {item.Game}. {item.ChampionatName}. {item.ForecastText}. {item.PublicPrognoz}");
+                        //using (var client = new WebClient())
+                        //{
 
 
-                            await client.DownloadStringTaskAsync(
-                                "https://smsc.ru/sys/send.php?login=Smsbet.Web&psw=Ujklujkl87&phones=" + "+7" +
-                                phonesList[0] + "&mes=" +
-                                $"Рады сообщить, что для вас готова ставка : {item.Game}. {item.ChampionatName}. {item.ForecastText}. {item.PublicPrognoz}");
+                        //    await client.DownloadStringTaskAsync(
+                        //        "https://smsc.ru/sys/send.php?login=Smsbet.Web&psw=Ujklujkl87&phones=" + "+7" +
+                        //        phonesList[0] + "&mes=" +
+                        //        $"Рады сообщить, что для вас готова ставка : {item.Game}. {item.ChampionatName}. {item.ForecastText}. {item.PublicPrognoz}");
 
-                        }
+                        //}
                     }
 
                     var countSms = int.Parse((await db.AppSettins.FirstOrDefaultAsync(f => f.Keys == "CountSms")).Value);

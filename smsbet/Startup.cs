@@ -81,10 +81,9 @@ namespace smsbet
 
             services.AddMemoryCache();
 
-
-            RecurringJob.AddOrUpdate(
-                () => HangfireTask.CheckMathes(),
-                Cron.MinuteInterval(3));
+            //RecurringJob.AddOrUpdate(
+            //    () => new HangfireTask.CheckMathes(),
+            //    Cron.MinuteInterval(3));
             
             
 
