@@ -9,18 +9,23 @@ using Smsbet.Web.Migrations;
 
 namespace Smsbet.Web
 {
+    public interface IHangfireTask
+    {
+         Task  CheckMathes();
+    }
     public class HangfireTask
     {
-        private IMessagePusher _messagePusher;
-        public HangfireTask(IMessagePusher messagePusher)
-        {
-            _messagePusher = messagePusher;
-        }
-        public async  Task CheckMathes()
+       // private IMessagePusher _messagePusher;
+        //public HangfireTask(IMessagePusher messagePusher = null)
+        //{
+            //messagePusher = messagePusher;
+        //}
+        public static async Task CheckMathes()
         {
             using(var db = new DbNorthwind())
             
             {
+                var messagePusher = new SmsPusher();
                 var forecasts = await db.Forecasts
                     .Where(w => w.Status == "Sale" && w.StartTime.AddMinutes(-15) <= DateTime.Now)
                     .ToListAsync();
@@ -39,12 +44,12 @@ namespace Smsbet.Web
                     if (phonesList.Count() > 1)
                     {
                         string phones = "+7" + String.Join(";+7", phonesList);
-                        await _messagePusher.Send(null, phonesList, $"Рады сообщить, что для вас готова ставка : {item.Game}. {item.ChampionatName}. {item.ForecastText}. {item.PublicPrognoz}");
+                        await messagePusher.Send(null, phonesList, $"Рады сообщить, что для вас готова ставка : {item.Game}. {item.ChampionatName}. {item.ForecastText}. {item.PublicPrognoz}");
                         
                     }
                     else if(phonesList.Any())
                     {
-                        await _messagePusher.Send(phonesList[0], new List<string>(), $"Рады сообщить, что для вас готова ставка : {item.Game}. {item.ChampionatName}. {item.ForecastText}. {item.PublicPrognoz}");
+                        await messagePusher.Send(phonesList[0], new List<string>(), $"Рады сообщить, что для вас готова ставка : {item.Game}. {item.ChampionatName}. {item.ForecastText}. {item.PublicPrognoz}");
                     }
 
                     var countSms = int.Parse((await db.AppSettins.FirstOrDefaultAsync(f => f.Keys == "CountSms")).Value);

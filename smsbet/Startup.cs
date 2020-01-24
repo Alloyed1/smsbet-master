@@ -33,6 +33,7 @@ namespace smsbet
         }
 
         public IConfiguration Configuration { get; }
+        
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -80,9 +81,9 @@ namespace smsbet
 
 
 
-            //RecurringJob.AddOrUpdate(
-            //    () => new HangfireTask.CheckMathes(),
-            //    Cron.MinuteInterval(3));
+            RecurringJob.AddOrUpdate(
+                () => HangfireTask.CheckMathes(),
+                Cron.MinuteInterval(3));
 
             services.AddMemoryCache();
             services.AddResponseCompression();
@@ -134,5 +135,8 @@ namespace smsbet
                 endpoints.MapRazorPages();
             });
         }
+
+
+
     }
 }
